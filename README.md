@@ -104,3 +104,26 @@ Top‑right **TR / EN** button toggles all UI strings, the setup guide and the R
 4. **Ollama** – Yerel `ollama` daemon’ı otomatik olarak `localhost:11434` üzerinden erişilir; bir model **`ollama pull <model>`** ile indirilir ve `ollama create <isim> -f <Modelfile>` ile kaydedilir.  
 
 **Engine‑order (Motor Sırası) örneği**
+Bu sırada bir model yanıt veremezse bir sonraki servise otomatik geçilir.
+
+---
+
+## 🤝 Contributing
+
+- Fork the repo, create a feature branch, submit a PR.  
+- Run `npm run lint && npm run typecheck` before committing.  
+- Update documentation (`docs/*.md`) and the bilingual translation dictionary (`src/renderer/i18n.js`) when adding UI strings.  
+
+## 📄 License
+MIT – see `LICENSE` file.
+
+---
+
+### 📌 README Güncellemesi İçin Öneri
+
+1. **README.md**’nin en üstüne **TR / EN** başlık ekleyin (kullanıcılar dili seçebilsin).  
+2. **Live Demo** ve **GitHub link** bölümlerini **görsel kart** (badge) ile süsleyin:  
+
+   ```markdown
+   [![GitHub stars](https://img.shields.io/github/stars/emrettc/emret-agency?style=flat)](https://github.com/emrettc/emret-agency/stargazers)
+   [![License](https://img.shields.io/github/license/emrettc/emret-agency)](LICENSE)
