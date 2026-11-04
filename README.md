@@ -1,75 +1,98 @@
-<p align="right"><b>🇹🇷 Türkçe</b> | <a href="README.en.md"><b>🇬🇧 English</b></a></p>
+Emret Agency
 
-<p><img src="docs/img/logo-yazi.svg" alt="Emret Agency" width="368"></p>
+TR: Kendi bilgisayarınızda çalışan, ücretsiz yerel modeller ve API‑ler ile çoklu kodlama ajanlarından oluşan bir ofisi yönetin.
+EN: Run a local office of multiple coding agents on your PC, with free local models and optional API integrations.
 
-# Emret Agency
-
-**Kendi bilgisayarında çalışan bir yapay zekâ ajan ofisi.** Genel Müdür işi dağıtır,
-işçi ajanlar piksel ofiste masalarında çalışır; mümkün olan her iş senin ekran
-kartındaki yerel modelle, token ücreti ödemeden yapılır.
-
-![Emret Agency piksel ofisi](docs/img/ofis.svg)
-
-[Kurulum ve kullanım kılavuzu](docs/KURULUM.md) ·
-[Ollama Yerel Model Rehberi](docs/OLLAMA-KURULUM.md) ·
-[Tanıtım sitesi](https://emret-agency.github.io/emret-agency/) ·
-[Bağış yap](#destek)
-
-## Neler var
-
-- **Çoklu ajan** — Claude Code, OpenCode, Codex, Crush, pi ve diğer CLI ajanları aynı ofiste.
-  Genel Müdür görevleri böler, işçiler yapar, birbirine mesaj atar.
-- **Önce yerel model** — llama-server ya da Ollama ile ekran kartında. Yerel yetmezse
-  önce ücretsiz, en son ücretli API; API kalmazsa yerelden devam.
-- **Ajan belleği** — sıra başka ajana geçince ajanın okuduğu her şey diske kaydedilir;
-  51 bin tokenlık bir konuşmaya dönüş 30 sn yerine ~2 sn.
-- **Kota koruması** — ücretli abonelikte işçiler %60'ta durur, %40 Genel Müdür'e kalır.
-- **Devam noktası** — her ajanın kısa `devam.md` notu; yeniden başlayan ajan kaldığı yerden sürer.
-- **Bana sor ve İnceleme** — ajanların soruları, onaylar ve birleştirilecek dallar tek yerde,
-  menüde kırmızı rozetle.
-- **Projeler, Telegram, temalar, ofis düzenleyici.**
-
-![Motor sırası](docs/img/motor-sirasi.svg)
-
-## Hızlı kurulum (Windows)
-
-**Bilgisayarın iyiyse ücretsiz çalış:** ekran kartın yeterliyse (NVIDIA, 8 GB ve üstü)
-önce [Ollama](https://ollama.com/download)'yı kur (`winget install Ollama.Ollama`).
-Ajanlar yerel motorla, token ücreti olmadan çalışır. Ekran kartın yoksa Ollama'yı
-atla ve `-Yerel` yazma; ajanlar bağladığın API motorlarıyla çalışır.
-
-```bash
-git clone https://github.com/emret-agency/emret-agency.git
+🔗 Live Demo
+Landing page: https://crewgamestudio.com/emretagency.html
+Setup guide (HTML): https://crewgamestudio.com/emretagency.html#kurulum
+📦 Getting Started
+1. Clone the repository
+bash
+git clone https://github.com/emrettc/emret-agency.git
 cd emret-agency
+2. Prerequisites (Windows)
+Tool	Install command
+Node.js LTS v20+	winget install OpenJS.NodeJS.LTS
+Git	winget install Git.Git
+Python 3.12	winget install Python.Python.3.12
+VS Build Tools (C++)	winget install Microsoft.VisualStudio.BuildTools
+Ollama (optional – local model)	winget install Ollama.Ollama
+
+Tip: All of the above can be installed automatically by running kurulum.cmd (see step 4).
+
+3. Install project dependencies
+bash
+npm ci               # installs npm packages and builds native C++ modules
+npm run postinstall   # Electron specific setup
+4. Run the automatic installer
+bash
+# Basic install – checks missing tools and installs them
+kurulum.cmd
+# Install local model (requires Ollama)
 kurulum.cmd -Yerel
+# Install all supported models (~40 GB download)
+kurulum.cmd -Yerel -TumModeller
+5. Start the application
+bash
 baslat.cmd
-```
 
-`kurulum.cmd` eksik araçları (Node.js 20+, Python 3.12, C++ derleme araçları, Ollama)
-denetler ve nasıl kurulacağını söyler, sonra paketleri kurar. `-Yerel` yerel modeli
-(`emrettc-genel`, ~8 GB) de indirir. macOS / Linux ve ayrıntılar için
-[kılavuz](docs/KURULUM.md).
+The terminal window must stay open while the app runs.
+Open your browser at http://localhost:3000 (or the port shown in the console).
 
-## Geliştirme
+6. Language switch
 
-```bash
-npm run dev                    # geliştirme modu
-npm run typecheck              # tip denetimi
-node --test test/*.test.cjs    # testler
-npm run dist:win               # Windows kurulum paketi
-```
+Top‑right TR / EN button toggles all UI strings, the setup guide and the README text.
 
-Mimari: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) ·
-Motorlar: [docs/BYOK-MOTORLAR.md](docs/BYOK-MOTORLAR.md) ·
-Katkı: [CONTRIBUTING.md](CONTRIBUTING.md)
+⚙️ Settings (Ayarlar)
+Ajanlar & Modeller – Ayarlar → Ajanlar ve Modeller → Motorlar menüsünden:
+Varsayılan işçi motoru – yeni ajanların hangi modeli kullanacağını belirler.
+Motor sırası – Yerel → Ücretsiz API → Ücretli API olarak sürükle‑bırak.
+API Keys – desteklenen hizmetler (OpenAI, Anthropic, Gemini, …) için API‑key girin.
+Ollama Model Files – resources/ollama/ içinde .Modelfilelar bulunur; ollama create <model‑adi> -f <Modelfile> ile yeni bir model tanımlanabilir.
+Kullanıcı‑Arayüzü – Ayarlar → Görünüm menüsü renk teması, logoyu ve masaüstü pencere davranışlarını özelleştirir.
+🤖 Agents (Ajanlar) – Nasıl Kullanılır?
+Agent	Görev tipi	Örnek komut
+Genel Müdür	İş dağıtıcı, planlayıcı	Komuta Merkezi → “Yeni bir React projesi oluştur”
+Developer	Kod üretimi, düzeltme	Komuta Merkezi → “Bu fonksiyonu TypeScript’e çevir”
+Designer	Görsel öneri, UI tasarımı	Komuta Merkezi → “Button için modern bir tasarım öner”
+Researcher	Döküman tarama, veri toplama	Komuta Merkezi → “En son React 18 release notlarını özetle”
+Chatbot	Soru‑cevap, yardım	Bana sor → “npm install komutu ne işe yarar?”
 
-## Destek
+Talimat‑kısım: Her ajan bir “Görev” alır, tamamlandığında Bana sor sekmesinde rapor verir. Ajanlar arasındaki mesajlaşma lokal disk üzerinden tutulur, bu da oturum kapatıp açılsa bile geçmişi korur.
 
-Emret Agency ücretsiz ve açık kaynaktır. İşine yaradıysa geliştirmeyi destekleyebilirsin:
+🛠️ Commands Cheat‑Sheet
+Command	What it does
+kurulum.cmd	Bağımlılıkları kontrol eder, eksik paketleri kurar, native modülleri derler.
+kurulum.cmd -Yerel	Ollama kurulumunu ve varsayılan yerel modeli (emrettc‑genel) ekler.
+kurulum.cmd -Yerel -TumModeller	Tüm yerel modelleri (light, genel, kod, analiz) indirir (~40 GB).
+baslat.cmd	Electron‑tabanlı UI’yı başlatır.
+npm run typecheck	Proje tip kontrollerini çalıştırır (TypeScript).
+npm run lint	Lint (ESLint) kurallarını uygular.
+npm run build	Prod sürümü paketler (Electron‑builder).
+npm run dev	Geliştirme modunda hot‑reload (vite).
+📡 API Entegrasyonu
+OpenAI – OPENAI_API_KEY ortam değişkeni veya Ayarlar → API Keys bölümüne ekleyin.
+Anthropic – ANTHROPIC_API_KEY aynı şekilde.
+Google Gemini – GEMINI_API_KEY.
+Ollama – Yerel ollama daemon’ı otomatik olarak localhost:11434 üzerinden erişilir; bir model ollama pull <model> ile indirilir ve ollama create <isim> -f <Modelfile> ile kaydedilir.
 
-[![Bağış yap](https://img.shields.io/badge/Ba%C4%9F%C4%B1%C5%9F%20yap-Emret%20Agency-e5484d?style=for-the-badge)](https://donate.bynogame.com/emrettc)
+Engine‑order (Motor Sırası) örneği
 
-## Lisans
+[Local (Ollama) → OpenAI → Anthropic → Gemini]
 
-Kaynak kod MIT lisanslıdır, bkz. [LICENSE](LICENSE); piksel çizimler için
-[LICENSE-ASSETS](LICENSE-ASSETS).
+Bu sırada bir model yanıt veremezse bir sonraki servise otomatik geçilir.
+---
+## 🤝 Contributing
+- Fork the repo, create a feature branch, submit a PR.  
+- Run `npm run lint && npm run typecheck` before committing.  
+- Update documentation (`docs/*.md`) and the bilingual translation dictionary (`src/renderer/i18n.js`) when adding UI strings.  
+## 📄 License
+MIT – see `LICENSE` file.
+---
+### 📌 README Güncellemesi İçin Öneri
+1. **README.md**’nin en üstüne **TR / EN** başlık ekleyin (kullanıcılar dili seçebilsin).  
+2. **Live Demo** ve **GitHub link** bölümlerini **görsel kart** (badge) ile süsleyin:  
+   ```markdown
+   [![GitHub stars](https://img.shields.io/github/stars/emrettc/emret-agency?style=flat)](https://github.com/emrettc/emret-agency/stargazers)
+   [![License](https://img.shields.io/github/license/emrettc/emret-agency)](LICENSE)
