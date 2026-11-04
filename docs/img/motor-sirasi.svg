@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="900" height="360" role="img" aria-labelledby="t d">
+  <title id="t">Motor sırası</title>
+  <desc id="d">İşçi ajanlar önce yerel modeli kullanır; yerel sıra uzarsa ya da konuşma sığmazsa önce ücretsiz, sonra ücretli API'ye taşar; Claude aboneliğinde işçiler yüzde altmışta durur, yüzde kırk yöneticiye kalır; hiçbir API kullanılamazsa ajan yerelde bekler.</desc>
+  <style>
+    text { font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif; fill: #1A1320; }
+    .b { font-size: 20px; font-weight: 700; }
+    .k { font-size: 14px; }
+    .s { font-size: 13px; fill: #4A4152; }
+  </style>
+  <rect width="900" height="360" fill="#F3F7F5"/>
+
+  <!-- 1 yerel -->
+  <rect x="24" y="40" width="250" height="150" rx="10" fill="#fff" stroke="#2F9E6A" stroke-width="3"/>
+  <rect x="24" y="40" width="250" height="36" rx="10" fill="#2F9E6A"/><rect x="24" y="64" width="250" height="12" fill="#2F9E6A"/>
+  <text x="44" y="65" class="b" style="fill:#fff">1. Yerel model</text>
+  <text x="44" y="104" class="k">Senin ekran kartın, ücretsiz.</text>
+  <text x="44" y="128" class="k">Sıra görevlisi ajanları sırayla alır;</text>
+  <text x="44" y="150" class="k">her ajanın belleği diske kaydedilir.</text>
+  <text x="44" y="176" class="s">llama-server ya da Ollama</text>
+
+  <!-- 2 ücretsiz -->
+  <rect x="325" y="40" width="250" height="150" rx="10" fill="#fff" stroke="#3A6FD8" stroke-width="3"/>
+  <rect x="325" y="40" width="250" height="36" rx="10" fill="#3A6FD8"/><rect x="325" y="64" width="250" height="12" fill="#3A6FD8"/>
+  <text x="345" y="65" class="b" style="fill:#fff">2. Ücretsiz API</text>
+  <text x="345" y="104" class="k">Yerel sırada uzun bekleyen ya da</text>
+  <text x="345" y="128" class="k">yerel modele sığmayan istek buraya</text>
+  <text x="345" y="150" class="k">taşar; ajan yeniden başlamaz.</text>
+  <text x="345" y="176" class="s">ör. EVREN, kurumsal ücretsiz kotalar</text>
+
+  <!-- 3 ücretli -->
+  <rect x="626" y="40" width="250" height="150" rx="10" fill="#fff" stroke="#E5484D" stroke-width="3"/>
+  <rect x="626" y="40" width="250" height="36" rx="10" fill="#E5484D"/><rect x="626" y="64" width="250" height="12" fill="#E5484D"/>
+  <text x="646" y="65" class="b" style="fill:#fff">3. Ücretli API</text>
+  <text x="646" y="104" class="k">En son çare. Abonelikte işçiler</text>
+  <text x="646" y="128" class="k">%60'ta durur; kalan %40</text>
+  <text x="646" y="150" class="k">Genel Müdür'e ayrılır.</text>
+  <text x="646" y="176" class="s">ör. Claude, Kimi, ChatGPT API</text>
+
+  <!-- oklar -->
+  <g fill="none" stroke="#1A1320" stroke-width="3"><path d="M278 115 H318"/><path d="M579 115 H619"/></g>
+  <g fill="#1A1320"><path d="M318 108 L326 115 L318 122 Z"/><path d="M619 108 L627 115 L619 122 Z"/></g>
+
+  <!-- %60 / %40 çubuğu -->
+  <rect x="626" y="210" width="150" height="18" fill="#E5484D"/>
+  <rect x="776" y="210" width="100" height="18" fill="#7A3E9D"/>
+  <text x="634" y="224" font-size="12" style="fill:#fff;font-weight:700">işçiler %60</text>
+  <text x="784" y="224" font-size="12" style="fill:#fff;font-weight:700">yönetici %40</text>
+
+  <!-- dönüş -->
+  <path d="M750 240 V300 H149 V196" fill="none" stroke="#2F9E6A" stroke-width="3" stroke-dasharray="8 6"/>
+  <path d="M142 204 L149 194 L156 204 Z" fill="#2F9E6A"/>
+  <text x="300" y="322" class="k">Hiçbir API kullanılamıyorsa (kota, kredi, erişim) ajan yerelde devam eder.</text>
+</svg>

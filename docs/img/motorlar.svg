@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 520" width="560" height="520" role="img" aria-labelledby="t d">
+  <title id="t">Motorlar paneli</title>
+  <desc id="d">Ofis ekranındaki motorlar paneli: ekran kartı belleği, yüklü model, modeldeki ve sıradaki ajanlar, API'ye taşanlar, ajan belleği; Claude aboneliğinin 5 saatlik ve haftalık kullanımı yüzde altmış işçi sınırıyla; API motorlarının durumu ve bugün harcanan token.</desc>
+  <style>
+    text { font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif; fill: #fff; }
+    .s { font-size: 15px; }
+    .b { font-size: 15px; font-weight: 700; }
+    .k { font-size: 13px; fill: #C9C2D2; }
+  </style>
+  <rect width="560" height="520" rx="14" fill="#1A1320"/>
+  <circle cx="30" cy="34" r="6" fill="#2F9E6A"/>
+  <text x="46" y="40" class="b" style="font-size:18px">Motorlar</text>
+  <text x="532" y="40" class="k" text-anchor="end">▴</text>
+
+  <text x="26" y="80" class="s">Ekran kartı</text><text x="534" y="80" class="b" text-anchor="end">9,2 / 10,0 GB</text>
+  <rect x="26" y="90" width="508" height="8" rx="4" fill="#3A3142"/><rect x="26" y="90" width="467" height="8" rx="4" fill="#2F9E6A"/>
+  <text x="26" y="126" class="s">Model</text><text x="534" y="126" class="b" text-anchor="end">emrettc-genel · llama-server</text>
+  <text x="26" y="154" class="s">Hız (okuma/yazma)</text><text x="534" y="154" class="b" text-anchor="end">2100 / 52 tok/sn</text>
+  <text x="26" y="182" class="s">Modelde</text><text x="534" y="182" class="b" text-anchor="end">Reklam</text>
+  <text x="26" y="210" class="s">Sırada</text><text x="534" y="210" class="b" text-anchor="end">Developer, Araştırma</text>
+  <text x="26" y="238" class="s">API'de</text><text x="534" y="238" class="b" text-anchor="end">Muhasebe (EVREN)</text>
+  <text x="26" y="266" class="s">Ajan belleği</text><text x="534" y="266" class="b" text-anchor="end">11 ajan · 9,6 GB</text>
+
+  <line x1="26" y1="286" x2="534" y2="286" stroke="#3A3142"/>
+  <text x="26" y="312" class="b">Krediler ve kotalar</text>
+  <text x="26" y="340" class="s">Claude · 5 saatlik</text><text x="534" y="340" class="b" text-anchor="end">%34</text>
+  <rect x="26" y="348" width="508" height="8" rx="4" fill="#3A3142"/><rect x="26" y="348" width="173" height="8" rx="4" fill="#C9A7E8"/>
+  <rect x="330" y="344" width="3" height="16" fill="#fff"/>
+  <text x="26" y="380" class="s">Claude · haftalık</text><text x="534" y="380" class="b" text-anchor="end" style="fill:#FF8A8E">%63</text>
+  <rect x="26" y="388" width="508" height="8" rx="4" fill="#3A3142"/><rect x="26" y="388" width="320" height="8" rx="4" fill="#E5484D"/>
+  <rect x="330" y="384" width="3" height="16" fill="#fff"/>
+  <text x="338" y="414" class="k">↑ %60: işçiler durur, kalan yöneticinin</text>
+
+  <circle cx="32" cy="440" r="5" fill="#2F9E6A"/><text x="44" y="445" class="s">EVREN · ücretsiz</text><text x="534" y="445" class="b" text-anchor="end">kullanılabilir</text>
+  <circle cx="32" cy="466" r="5" fill="#2F9E6A"/><text x="44" y="471" class="s">Google Gemini · ücretli</text><text x="534" y="471" class="b" text-anchor="end">kullanılabilir</text>
+  <circle cx="32" cy="492" r="5" fill="#E5484D"/><text x="44" y="497" class="s">Kimi · ücretli</text><text x="534" y="497" class="b" text-anchor="end" style="fill:#FF8A8E">kredi yok · Çar 20:45</text>
+</svg>

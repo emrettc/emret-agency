@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440" width="640" height="440" role="img" aria-labelledby="t d">
+  <title id="t">Ajansını şekillendir</title>
+  <desc id="d">Ofis düzenleyici: masalar sürüklenip bırakılarak yer değiştirir; yanda hazır temalar, renkler ve logo seçimi; ajan kartında ad, rol ve motor seçimi.</desc>
+  <style>
+    text { font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif; fill: #1A1320; }
+    .s { font-size: 13px; }
+    .b { font-size: 14px; font-weight: 700; }
+  </style>
+  <rect width="640" height="440" rx="14" fill="#F3F7F5"/>
+  <!-- düzenleyici zemini -->
+  <rect x="20" y="20" width="400" height="400" rx="10" fill="#7FA898"/>
+  <g stroke="#6E9787" stroke-width="1">
+    <path d="M20 60H420M20 100H420M20 140H420M20 180H420M20 220H420M20 260H420M20 300H420M20 340H420M20 380H420"/>
+    <path d="M60 20V420M100 20V420M140 20V420M180 20V420M220 20V420M260 20V420M300 20V420M340 20V420M380 20V420"/>
+  </g>
+  <rect x="20" y="20" width="400" height="34" rx="10" fill="#1A1320"/>
+  <text x="36" y="42" class="b" style="fill:#fff">✎ Ofisi düzenle — masaları sürükle</text>
+  <!-- masalar -->
+  <g fill="#C79B5E"><rect x="60" y="90" width="80" height="34"/><rect x="220" y="90" width="80" height="34"/><rect x="60" y="230" width="80" height="34"/><rect x="300" y="300" width="80" height="34"/></g>
+  <g fill="#2B2140"><rect x="88" y="74" width="24" height="18"/><rect x="248" y="74" width="24" height="18"/><rect x="88" y="214" width="24" height="18"/><rect x="328" y="284" width="24" height="18"/></g>
+  <!-- sürüklenen masa -->
+  <rect x="220" y="200" width="80" height="34" fill="#C79B5E" opacity="0.55" stroke="#1A1320" stroke-width="2" stroke-dasharray="6 4"/>
+  <path d="M260 236 L300 296" stroke="#1A1320" stroke-width="3" fill="none" stroke-dasharray="2 6" stroke-linecap="round"/>
+  <path d="M292 284 L304 300 L286 300 Z" fill="#1A1320"/>
+  <rect x="160" y="370" width="120" height="30" rx="6" fill="#fff"/><text x="174" y="390" class="s">Kaydet · Sıfırla</text>
+
+  <!-- temalar -->
+  <text x="444" y="44" class="b">Tema ve renk</text>
+  <g>
+    <rect x="444" y="56" width="52" height="40" rx="8" fill="#1A1320"/><rect x="452" y="64" width="36" height="8" rx="4" fill="#2F9E6A"/>
+    <rect x="504" y="56" width="52" height="40" rx="8" fill="#FFFFFF" stroke="#CFDAD5"/><rect x="512" y="64" width="36" height="8" rx="4" fill="#3A6FD8"/>
+    <rect x="564" y="56" width="52" height="40" rx="8" fill="#7A3E9D"/><rect x="572" y="64" width="36" height="8" rx="4" fill="#F2C94C"/>
+    <rect x="444" y="56" width="52" height="40" rx="8" fill="none" stroke="#E5484D" stroke-width="3"/>
+  </g>
+  <text x="444" y="118" class="s">Hazır temalar, açık/koyu mod,</text>
+  <text x="444" y="136" class="s">renk ve yazı ayarları</text>
+
+  <text x="444" y="176" class="b">Logo</text>
+  <rect x="444" y="186" width="172" height="44" rx="8" fill="#fff" stroke="#CFDAD5"/>
+  <rect x="454" y="194" width="28" height="28" fill="#1A1320"/><rect x="460" y="200" width="10" height="16" fill="#F5F1E6"/><rect x="474" y="200" width="4" height="4" fill="#2F9E6A"/>
+  <text x="492" y="213" class="s">Kendi logonu yükle</text>
+
+  <text x="444" y="270" class="b">Ajan</text>
+  <rect x="444" y="280" width="172" height="120" rx="8" fill="#fff" stroke="#CFDAD5"/>
+  <text x="456" y="302" class="s">Ad: Tasarım</text>
+  <text x="456" y="324" class="s">Rol: UI / marka</text>
+  <text x="456" y="346" class="s">Proje: Mağaza</text>
+  <rect x="456" y="358" width="64" height="22" rx="11" fill="#2F9E6A"/><text x="469" y="374" class="s" style="fill:#fff">Yerel</text>
+  <rect x="526" y="358" width="78" height="22" rx="11" fill="#fff" stroke="#3A6FD8"/><text x="538" y="374" class="s" style="fill:#3A6FD8">Gemini ▾</text>
+</svg>

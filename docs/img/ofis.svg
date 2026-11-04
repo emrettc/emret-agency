@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" width="960" height="600" shape-rendering="crispEdges" role="img" aria-labelledby="t">
+  <title id="t">Emret Agency piksel ofisi: masalarında çalışan ajanlar</title>
+  <defs>
+    <pattern id="zemin" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="#7FA898"/>
+      <rect width="16" height="1" fill="#6E9787"/>
+      <rect width="1" height="16" fill="#6E9787"/>
+    </pattern>
+    <g id="masa">
+      <rect x="0" y="10" width="30" height="12" fill="#C79B5E"/>
+      <rect x="0" y="20" width="30" height="2" fill="#9C7442"/>
+      <rect x="2" y="22" width="2" height="6" fill="#9C7442"/>
+      <rect x="26" y="22" width="2" height="6" fill="#9C7442"/>
+      <rect x="9" y="0" width="12" height="9" fill="#2B2140"/>
+      <rect x="10" y="1" width="10" height="7" fill="#8FE3C0"/>
+      <rect x="14" y="9" width="2" height="2" fill="#2B2140"/>
+      <rect x="11" y="13" width="8" height="2" fill="#E9E4D8"/>
+    </g>
+    <g id="kisi">
+      <rect x="1" y="0" width="6" height="2" fill="#3B2A1E"/>
+      <rect x="1" y="2" width="6" height="5" fill="#F0C9A0"/>
+      <rect x="2" y="4" width="1" height="1" fill="#1A1320"/>
+      <rect x="5" y="4" width="1" height="1" fill="#1A1320"/>
+      <rect x="0" y="7" width="8" height="7" fill="currentColor"/>
+      <rect x="1" y="14" width="2" height="3" fill="#1A1320"/>
+      <rect x="5" y="14" width="2" height="3" fill="#1A1320"/>
+    </g>
+  </defs>
+
+  <rect width="320" height="200" fill="url(#zemin)"/>
+  <!-- duvar ve pencereler -->
+  <rect width="320" height="34" fill="#E7E2D6"/>
+  <rect y="34" width="320" height="3" fill="#B8B0A0"/>
+  <g fill="#9CC7E8"><rect x="40" y="8" width="26" height="16"/><rect x="140" y="8" width="26" height="16"/><rect x="240" y="8" width="26" height="16"/></g>
+  <g fill="#E7E2D6"><rect x="52" y="8" width="2" height="16"/><rect x="152" y="8" width="2" height="16"/><rect x="252" y="8" width="2" height="16"/></g>
+  <!-- tahta: görevler -->
+  <rect x="88" y="6" width="40" height="22" fill="#9C7442"/>
+  <rect x="90" y="8" width="36" height="18" fill="#F5F1E6"/>
+  <g fill="#F2C94C"><rect x="93" y="11" width="6" height="5"/><rect x="108" y="17" width="6" height="5"/></g>
+  <g fill="#E5484D"><rect x="101" y="11" width="6" height="5"/></g>
+  <g fill="#3A6FD8"><rect x="116" y="11" width="6" height="5"/></g>
+
+  <!-- yönetici masası -->
+  <use href="#masa" x="146" y="48"/>
+  <g color="#7A3E9D" transform="translate(157 74)"><use href="#kisi"/></g>
+  <rect x="140" y="40" width="44" height="9" fill="#1A1320"/>
+  <text x="162" y="47" font-family="Segoe UI, sans-serif" font-size="6" fill="#fff" text-anchor="middle">Genel Müdür</text>
+
+  <!-- işçi masaları -->
+  <use href="#masa" x="30" y="100"/>
+  <g color="#2F9E6A" transform="translate(41 126)"><use href="#kisi"/></g>
+  <use href="#masa" x="100" y="100"/>
+  <g color="#2F9E6A" transform="translate(111 126)"><use href="#kisi"/></g>
+  <use href="#masa" x="190" y="100"/>
+  <g color="#3A6FD8" transform="translate(201 126)"><use href="#kisi"/></g>
+  <use href="#masa" x="260" y="100"/>
+  <g color="#2F9E6A" transform="translate(271 126)"><use href="#kisi"/></g>
+  <use href="#masa" x="60" y="150"/>
+  <g color="#C9B458" transform="translate(71 176)"><use href="#kisi"/></g>
+  <use href="#masa" x="230" y="150"/>
+  <g color="#2F9E6A" transform="translate(241 176)"><use href="#kisi"/></g>
+
+  <!-- konuşma balonları: motor durumu -->
+  <g font-family="Segoe UI, sans-serif" font-size="6">
+    <rect x="22" y="88" width="46" height="10" fill="#fff"/><rect x="22" y="88" width="3" height="10" fill="#2F9E6A"/>
+    <text x="28" y="95" fill="#1A1320">yerel · yazıyor</text>
+    <rect x="92" y="88" width="40" height="10" fill="#fff"/><rect x="92" y="88" width="3" height="10" fill="#2F9E6A"/>
+    <text x="98" y="95" fill="#1A1320">yerel · test</text>
+    <rect x="180" y="88" width="50" height="10" fill="#fff"/><rect x="180" y="88" width="3" height="10" fill="#3A6FD8"/>
+    <text x="186" y="95" fill="#1A1320">API'ye taştı</text>
+    <rect x="252" y="88" width="48" height="10" fill="#fff"/><rect x="252" y="88" width="3" height="10" fill="#2F9E6A"/>
+    <text x="258" y="95" fill="#1A1320">yerel · bitti ✓</text>
+    <rect x="50" y="138" width="40" height="10" fill="#fff"/><rect x="50" y="138" width="3" height="10" fill="#C9B458"/>
+    <text x="56" y="145" fill="#1A1320">sırada</text>
+    <rect x="216" y="138" width="56" height="10" fill="#fff"/><rect x="216" y="138" width="3" height="10" fill="#E5484D"/>
+    <text x="222" y="145" fill="#1A1320">sana soru sordu</text>
+  </g>
+  <!-- bitkiler -->
+  <g><rect x="8" y="40" width="6" height="8" fill="#2F9E6A"/><rect x="9" y="48" width="4" height="4" fill="#9C7442"/></g>
+  <g><rect x="306" y="40" width="6" height="8" fill="#2F9E6A"/><rect x="307" y="48" width="4" height="4" fill="#9C7442"/></g>
+</svg>

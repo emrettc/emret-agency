@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" width="900" height="470" role="img" aria-labelledby="t d">
+  <title id="t">Emret Agency mimarisi</title>
+  <desc id="d">Masaüstü uygulaması ajanları kendi terminallerinde çalıştırır. Ajanların model istekleri sıra görevlisinden geçer; sıra görevlisi istekleri yerel motora ya da API motorlarına yönlendirir ve ajan belleğini diske kaydeder.</desc>
+  <style>
+    text { font-family: "Atkinson Hyperlegible", "Segoe UI", sans-serif; fill: #1A1320; }
+    .h { font-size: 17px; font-weight: 700; }
+    .k { font-size: 13px; }
+    .s { font-size: 12px; fill: #4A4152; }
+  </style>
+  <rect width="900" height="470" fill="#F3F7F5"/>
+
+  <!-- uygulama çerçevesi -->
+  <rect x="20" y="20" width="560" height="430" rx="12" fill="#fff" stroke="#1A1320" stroke-width="2"/>
+  <text x="40" y="50" class="h">Emret Agency masaüstü uygulaması (Electron)</text>
+
+  <!-- ajanlar -->
+  <rect x="40" y="70" width="250" height="150" rx="8" fill="#F7F4FB" stroke="#7A3E9D" stroke-width="2"/>
+  <text x="56" y="96" class="h">Ajanlar</text>
+  <text x="56" y="120" class="k">Her biri kendi terminalinde bir</text>
+  <text x="56" y="138" class="k">kodlama ajanı: Claude Code,</text>
+  <text x="56" y="156" class="k">OpenCode, Codex…</text>
+  <text x="56" y="182" class="s">Genel Müdür işi dağıtır, işçiler yapar.</text>
+  <text x="56" y="200" class="s">Gelen kutusu, görevler, hafıza.</text>
+
+  <!-- ofis arayüzü -->
+  <rect x="310" y="70" width="250" height="150" rx="8" fill="#F7F4FB" stroke="#7A3E9D" stroke-width="2"/>
+  <text x="326" y="96" class="h">Ofis ekranı</text>
+  <text x="326" y="120" class="k">Piksel ofis, Komuta Merkezi,</text>
+  <text x="326" y="138" class="k">Bana sor, İnceleme, Görevler,</text>
+  <text x="326" y="156" class="k">Ayarlar › Motorlar.</text>
+  <text x="326" y="182" class="s">Telegram'dan durum ve günlük özet.</text>
+
+  <!-- sıra görevlisi -->
+  <rect x="40" y="250" width="520" height="180" rx="8" fill="#EEF7F2" stroke="#2F9E6A" stroke-width="2"/>
+  <text x="56" y="276" class="h">Sıra görevlisi (yerel vekil, 127.0.0.1)</text>
+  <text x="56" y="302" class="k">• Yerel modele aynı anda kaç ajan gireceğini ve öncelik sırasını yönetir.</text>
+  <text x="56" y="324" class="k">• Ajan değişince eskisinin belleğini diske kaydeder, yenisininkini yükler</text>
+  <text x="72" y="342" class="k">(51 bin tokenlık konuşmaya dönüş: 30 sn yerine ~2 sn).</text>
+  <text x="56" y="364" class="k">• Sıra uzarsa ya da konuşma sığmazsa isteği ücretsiz, sonra ücretli</text>
+  <text x="72" y="382" class="k">API'ye taşır; API yoksa yerelde bekletir.</text>
+  <text x="56" y="410" class="s">Ölçümler: RTX 3080 10 GB, Gemma 4 12B, llama-server.</text>
+
+  <!-- ok: ajanlar -> sıra görevlisi -->
+  <path d="M165 222 V246" stroke="#1A1320" stroke-width="2.5"/><path d="M159 240 L165 250 L171 240 Z" fill="#1A1320"/>
+
+  <!-- sağ: motorlar -->
+  <rect x="620" y="40" width="260" height="120" rx="10" fill="#fff" stroke="#2F9E6A" stroke-width="3"/>
+  <text x="640" y="70" class="h" style="fill:#2F9E6A">Yerel motor</text>
+  <text x="640" y="94" class="k">llama-server (önerilen) ya da Ollama</text>
+  <text x="640" y="114" class="k">Modelin ekran kartında; token ücreti yok</text>
+  <text x="640" y="140" class="s">Ajan belleği: D:\Emret Agency-bellek\yuvalar</text>
+
+  <rect x="620" y="180" width="260" height="110" rx="10" fill="#fff" stroke="#3A6FD8" stroke-width="3"/>
+  <text x="640" y="210" class="h" style="fill:#3A6FD8">Ücretsiz API</text>
+  <text x="640" y="234" class="k">OpenAI ya da Anthropic uyumlu her</text>
+  <text x="640" y="254" class="k">uç nokta (ör. EVREN)</text>
+
+  <rect x="620" y="310" width="260" height="140" rx="10" fill="#fff" stroke="#E5484D" stroke-width="3"/>
+  <text x="640" y="340" class="h" style="fill:#E5484D">Ücretli API</text>
+  <text x="640" y="364" class="k">Claude aboneliği, Kimi, ChatGPT API…</text>
+  <text x="640" y="384" class="k">İşçiler %60'ta durur,</text>
+  <text x="640" y="404" class="k">%40 Genel Müdür'e kalır.</text>
+  <text x="640" y="430" class="s">Anahtarlar şifreli saklanır.</text>
+
+  <!-- oklar: sıra görevlisi -> motorlar -->
+  <g stroke="#1A1320" stroke-width="2.5" fill="none">
+    <path d="M562 300 C590 300 590 100 614 100"/>
+    <path d="M562 330 C595 330 595 235 614 235"/>
+    <path d="M562 360 C595 360 595 380 614 380"/>
+  </g>
+  <g fill="#1A1320"><path d="M608 94 L618 100 L608 106 Z"/><path d="M608 229 L618 235 L608 241 Z"/><path d="M608 374 L618 380 L608 386 Z"/></g>
+</svg>

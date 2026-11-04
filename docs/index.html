@@ -1,0 +1,976 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta_title">Emret Agency — Kendi Bilgisayarında Çalışan Yapay Zekâ Ajan Ofisi</title>
+<meta name="description" content="Emret Agency: Çoklu kodlama ajanlarından oluşan bir ofisi kendi bilgisayarında, yerel modelle ve sıfır token maliyetiyle çalıştıran açık kaynaklı masaüstü uygulaması.">
+<link rel="icon" href="img/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Pixelify+Sans:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1A1320;
+    --ink-soft: #4A4152;
+    --floor: #7FA898;
+    --floor-pale: #EEF4F1;
+    --paper: #FFFFFF;
+    --wood: #C79B5E;
+    --local: #2F9E6A;
+    --free: #3A6FD8;
+    --paid: #E5484D;
+    --boss: #7A3E9D;
+    --gold: #D4A31C;
+    --line: #CFDAD5;
+    --pixel: "Pixelify Sans", "Segoe UI", sans-serif;
+    --text: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--floor-pale); color: var(--ink); font-family: var(--text); font-size: 18px; line-height: 1.6; }
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--free); outline-offset: 3px; }
+  .wrap { width: min(1140px, 100% - 32px); margin-inline: auto; }
+  h1, h2, h3, h4 { font-family: var(--pixel); font-weight: 700; line-height: 1.1; letter-spacing: 0.01em; margin: 0; }
+  h2 { font-size: clamp(30px, 4vw, 44px); margin-bottom: 18px; }
+  h3 { font-size: 22px; margin-bottom: 8px; }
+  p { margin: 0 0 14px; max-width: 66ch; }
+  section { padding: 88px 0; }
+  code, pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 15px; }
+
+  /* Üst çubuk */
+  .bar { position: sticky; top: 0; z-index: 100; background: var(--ink); color: #fff; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .bar .wrap { display: flex; align-items: center; gap: 16px; height: 64px; }
+  .logo { font-family: var(--text); font-size: 22px; font-weight: 700; letter-spacing: 0.06em; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .logo img { image-rendering: pixelated; display: block; }
+  .bar nav { display: flex; gap: 18px; margin-left: auto; font-size: 16px; align-items: center; }
+  .bar nav a { text-decoration: none; opacity: 0.88; white-space: nowrap; transition: opacity 0.15s; }
+  .bar nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; font-family: var(--pixel); font-size: 18px; font-weight: 700; text-decoration: none; border: 3px solid var(--ink); background: var(--paper); color: var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform 80ms steps(2), box-shadow 80ms steps(2); cursor: pointer; }
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+  .btn.go { background: var(--local); color: #fff; }
+  .btn.give { background: var(--paid); color: #fff; }
+  .bar .btn { padding: 6px 14px; font-size: 16px; border-color: #fff; box-shadow: 3px 3px 0 #fff; }
+
+  /* Dil Seçici (TR / EN) */
+  .lang-switch { display: inline-flex; align-items: center; background: #2A1E33; border: 2px solid #fff; box-shadow: 2px 2px 0 #fff; margin-left: 8px; }
+  .lang-btn { background: transparent; border: 0; color: #fff; font-family: var(--pixel); font-size: 14px; font-weight: 700; padding: 4px 10px; cursor: pointer; opacity: 0.65; transition: all 0.15s; }
+  .lang-btn.active { background: var(--local); opacity: 1; color: #fff; }
+
+  /* Giriş (Hero) */
+  .hero { padding: 64px 0 56px; background: var(--floor); position: relative; overflow: hidden; }
+  .hero::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(#6E9787 1px, transparent 1px), linear-gradient(90deg, #6E9787 1px, transparent 1px); background-size: 32px 32px; opacity: 0.55; }
+  .hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr); gap: 48px; align-items: center; }
+  .badge-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: #fff; padding: 4px 12px; font-family: var(--pixel); font-size: 14px; margin-bottom: 16px; border: 2px solid var(--ink); box-shadow: 2px 2px 0 rgba(0,0,0,0.2); }
+  .badge-tag span { width: 8px; height: 8px; background: var(--local); display: inline-block; }
+  .hero h1 { font-size: clamp(36px, 4.2vw, 56px); color: var(--ink); overflow-wrap: break-word; }
+  .hero p { font-size: 21px; margin-top: 20px; color: var(--ink); }
+  .cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+  .screen { background: var(--ink); padding: 14px; border: 4px solid var(--ink); box-shadow: 8px 8px 0 rgba(26,19,32,0.35); }
+  .screen img { image-rendering: pixelated; width: 100%; height: auto; }
+  .ticker { display: flex; align-items: center; gap: 10px; margin-top: 12px; color: #fff; font-family: var(--pixel); font-size: 17px; min-height: 26px; }
+  .ticker b { width: 12px; height: 12px; flex: none; background: var(--local); }
+  .ticker .caret { width: 9px; height: 18px; background: #fff; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Akış */
+  .flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 30px; border: 3px solid var(--ink); background: var(--paper); box-shadow: 6px 6px 0 rgba(0,0,0,0.1); }
+  .flow > div { padding: 26px 24px; border-right: 3px solid var(--ink); }
+  .flow > div:last-child { border-right: 0; }
+  .flow .who { font-family: var(--pixel); font-size: 15px; color: var(--ink-soft); margin-bottom: 6px; text-transform: uppercase; }
+  .flow p { font-size: 17px; margin: 0; }
+
+  /* Motor sırası */
+  .engines { background: var(--paper); border-block: 3px solid var(--ink); }
+  .lanes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 34px 0 22px; }
+  .lane { border: 3px solid var(--ink); background: var(--paper); box-shadow: 4px 4px 0 rgba(0,0,0,0.08); }
+  .lane header { padding: 12px 18px; color: #fff; font-family: var(--pixel); font-size: 22px; font-weight: 700; }
+  .lane div { padding: 16px 18px 20px; font-size: 17px; }
+  .lane.l header { background: var(--local); } .lane.f header { background: var(--free); } .lane.p header { background: var(--paid); }
+  .lane small { display: block; color: var(--ink-soft); margin-top: 10px; font-size: 15px; }
+  .split { display: flex; height: 42px; border: 3px solid var(--ink); font-family: var(--pixel); font-size: 17px; color: #fff; max-width: 640px; margin: 16px 0; }
+  .split span { display: flex; align-items: center; padding: 0 14px; }
+  .split .w { width: 60%; background: var(--paid); } .split .b { width: 40%; background: var(--boss); }
+  .back { margin-top: 16px; padding-left: 14px; border-left: 6px solid var(--local); font-size: 17px; }
+
+  /* Tablolar */
+  table { border-collapse: collapse; width: 100%; max-width: 900px; background: var(--paper); border: 3px solid var(--ink); font-size: 17px; box-shadow: 6px 6px 0 rgba(0,0,0,0.08); }
+  th, td { text-align: left; padding: 14px 16px; border-bottom: 2px solid var(--line); vertical-align: middle; }
+  th { font-family: var(--pixel); font-weight: 700; font-size: 17px; background: var(--floor-pale); }
+  td.win { color: var(--local); font-weight: 700; }
+  .note { font-size: 15px; color: var(--ink-soft); margin-top: 14px; }
+
+  /* Özellikler */
+  dl.feat { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 56px; margin: 30px 0 0; }
+  dl.feat div { padding: 18px 0; border-top: 2px solid var(--line); }
+  dl.feat dt { font-family: var(--pixel); font-size: 21px; font-weight: 700; color: var(--ink); }
+  dl.feat dd { margin: 6px 0 0; font-size: 17px; color: var(--ink-soft); }
+
+  /* Kademeler */
+  table.tiers { margin-top: 22px; }
+  ol.mini { margin: 22px 0 0; padding-left: 22px; display: grid; gap: 10px; font-size: 17px; max-width: 72ch; }
+  ol.mini code, p code { background: var(--paper); border: 2px solid var(--line); padding: 1px 6px; font-size: 15px; }
+
+  /* İki sütun */
+  .duo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .shot { margin: 0; border: 3px solid var(--ink); background: var(--paper); box-shadow: 8px 8px 0 rgba(26,19,32,0.25); }
+  .shot img { image-rendering: pixelated; width: 100%; height: auto; }
+  ul.ticks { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 12px; max-width: 62ch; }
+  ul.ticks li { position: relative; padding-left: 26px; font-size: 17px; }
+  ul.ticks li::before { content: ""; position: absolute; left: 0; top: 8px; width: 12px; height: 12px; background: var(--local); }
+
+  /* Ekran turu */
+  .tour { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 36px; align-items: start; margin-top: 26px; }
+  .tour figure { margin: 0; border: 3px solid var(--ink); background: var(--paper); box-shadow: 6px 6px 0 rgba(0,0,0,0.1); }
+  .tour ol { margin: 0; padding: 0; list-style: none; counter-reset: c; }
+  .tour li { counter-increment: c; display: grid; grid-template-columns: 34px 1fr; gap: 12px; padding: 14px 0; border-bottom: 2px solid var(--line); font-size: 17px; }
+  .tour li::before { content: counter(c); width: 28px; height: 28px; border-radius: 50%; background: var(--paid); color: #fff; font-family: var(--pixel); display: grid; place-items: center; font-size: 15px; }
+
+  /* Kurulum */
+  .install { background: var(--ink); color: #fff; }
+  .install h2, .install h3 { color: #fff; }
+  .steps { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 24px; max-width: 900px; counter-reset: s; }
+  .steps li { counter-increment: s; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; }
+  .steps li::before { content: counter(s); width: 44px; height: 44px; background: var(--local); color: #fff; font-family: var(--pixel); font-size: 24px; display: grid; place-items: center; border: 2px solid #fff; }
+  .steps p { color: #DCD6E2; font-size: 17px; margin: 4px 0 8px; }
+  .cmd { display: flex; align-items: stretch; margin-top: 8px; border: 2px solid #4A4152; background: #110C16; }
+  .cmd pre { margin: 0; padding: 12px 14px; flex: 1; overflow-x: auto; color: #8FE3C0; }
+  .cmd button { border: 0; border-left: 2px solid #4A4152; background: transparent; color: #fff; font-family: var(--text); font-size: 15px; padding: 0 16px; cursor: pointer; transition: background 0.15s; }
+  .cmd button:hover { background: #2B2140; }
+  .install .more { margin-top: 28px; font-size: 17px; }
+  .install a.link { color: #8FE3C0; text-decoration: underline; text-underline-offset: 4px; }
+
+  /* SSS */
+  details { border-top: 2px solid var(--line); padding: 18px 0; max-width: 900px; }
+  details:last-of-type { border-bottom: 2px solid var(--line); }
+  summary { cursor: pointer; font-family: var(--pixel); font-size: 21px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  summary::after { content: "+"; font-size: 24px; line-height: 1; }
+  details[open] summary::after { content: "−"; }
+  details p { margin: 12px 0 0; font-size: 17px; color: var(--ink-soft); }
+
+  /* Bağış */
+  .give-sec { background: var(--paid); color: #fff; border-block: 3px solid var(--ink); }
+  .give-sec .wrap { display: grid; grid-template-columns: minmax(0, 3fr) auto; gap: 32px; align-items: center; }
+  .give-sec h2 { color: #fff; }
+  .give-sec p { font-size: 19px; }
+  .give-sec .btn { background: #fff; color: var(--ink); font-size: 22px; padding: 16px 28px; }
+
+  footer { padding: 36px 0 48px; font-size: 15px; color: var(--ink-soft); background: var(--floor-pale); }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; justify-content: space-between; align-items: center; }
+
+  @media (max-width: 1060px) {
+    .bar nav { display: none; }
+    .bar .btn { margin-left: auto; }
+  }
+  @media (max-width: 860px) {
+    .hero .wrap, .tour, .give-sec .wrap, .duo { grid-template-columns: 1fr; }
+    .flow, .lanes, dl.feat { grid-template-columns: 1fr; }
+    .flow > div { border-right: 0; border-bottom: 3px solid var(--ink); }
+    .flow > div:last-child { border-bottom: 0; }
+    section { padding: 64px 0; }
+    th, td { padding: 10px; font-size: 15px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="logo" href="#"><img src="img/logo-yazi.svg" alt="Emret Agency" width="184" height="32"></a>
+    <nav aria-label="Sayfa">
+      <a href="#motorlar" data-i18n="nav_engines">Motorlar</a>
+      <a href="#yerel" data-i18n="nav_local">Yerel Model</a>
+      <a href="#sekillendir" data-i18n="nav_features">Özellikler</a>
+      <a href="#kurulum" data-i18n="nav_setup">Hızlı Kurulum</a>
+      <a href="kurulum.html" style="color:#8FE3C0;font-weight:700;" data-i18n="nav_visual_guide">★ Resimli Kurulum Rehberi</a>
+      <a href="https://github.com/emret-agency/emret-agency">GitHub</a>
+      <a href="https://github.com/emret-agency/emret-agency/blob/main/docs/KURULUM.md" data-i18n="nav_docs">Kılavuz</a>
+    </nav>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button class="lang-btn active" id="btnTr" onclick="setLang('tr')">TR</button>
+      <button class="lang-btn" id="btnEn" onclick="setLang('en')">EN</button>
+    </div>
+    <a class="btn give" data-bagis href="https://donate.bynogame.com/emrettc" data-i18n="nav_donate">Bağış yap</a>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="baslik">
+    <div class="wrap">
+      <div>
+        <div class="badge-tag"><span></span> <span data-i18n="hero_badge">AÇIK KAYNAKLI & YEREL MOTOR DESTEKLİ</span></div>
+        <h1 id="baslik" data-i18n="hero_title">Ofisin senin bilgisayarında.</h1>
+        <p data-i18n="hero_desc">Emret Agency, kodlama ajanlarından oluşan otonom bir ekip kurar: <b>Genel Müdür</b> işi planlayıp dağıtır, işçi ajanlar piksel ofiste masalarında kod yazar. Mümkün olan tüm işler senin ekran kartındaki yerel yapay zekâ ile <b>sıfır token ücretiyle</b> yapılır; istersen API bağlayıp ekibini devasa projelere büyütürsün.</p>
+        <div class="cta">
+          <a class="btn go" href="https://github.com/emret-agency/emret-agency" data-i18n="cta_github">GitHub'dan İndir</a>
+          <a class="btn" href="kurulum.html" data-i18n="cta_guide">Resimli Kurulum Rehberi</a>
+          <a class="btn" href="https://github.com/emret-agency/emret-agency/blob/main/docs/OLLAMA-KURULUM.md" data-i18n="cta_ollama">Ollama Rehberi</a>
+          <a class="btn give" data-bagis href="https://donate.bynogame.com/emrettc" data-i18n="cta_donate">Destekle</a>
+        </div>
+      </div>
+      <div>
+        <div class="screen">
+          <img src="img/ofis.svg" width="960" height="600" alt="Piksel ofiste masalarında çalışan ajanlar">
+          <div class="ticker" aria-live="off"><b id="tickDot"></b><span id="tick">Developer yerel modelde birim testleri koşturuyor</span><span class="caret" aria-hidden="true"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOW -->
+  <section id="nasil" aria-labelledby="nasil-b">
+    <div class="wrap">
+      <h2 id="nasil-b" data-i18n="flow_title">Bir çalışan değil, tam donanımlı bir ofis</h2>
+      <p data-i18n="flow_desc">Tek bir kodlama ajanıyla çalışmak, tek bir çalışanla çalışmak gibidir: ona iş verirsin ve bitene kadar terminal başında beklersin. Emret Agency bunu çoklu ajanlı otonom bir yazılım şirketine dönüştürür:</p>
+      <div class="flow">
+        <div>
+          <div class="who" data-i18n="flow_who1">1 · Sen (Yönetici)</div>
+          <p data-i18n="flow_p1">Komuta Merkezi'nde Genel Müdür'e hedefini söylersin. Ajanların onay isteyen kritik sorularını <b>Bana Sor</b> panosunda yanıtlarsın.</p>
+        </div>
+        <div>
+          <div class="who" data-i18n="flow_who2">2 · Genel Müdür (Orkestratör)</div>
+          <p data-i18n="flow_p2">İsteğini mimari adımlara böler, işçileri göreve çağırır, görevleri dağıtır, süreci denetler ve sonucu sana özetler.</p>
+        </div>
+        <div>
+          <div class="who" data-i18n="flow_who3">3 · İşçi Ajanlar (Uzman Ekip)</div>
+          <p data-i18n="flow_p3">Developer, Tasarımcı, Araştırmacı, Reklamcı... Her biri kendi izole çalışma klasöründe çalışır, biten kodları <b>İnceleme Masası</b>'na bırakır.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENGINES -->
+  <section id="motorlar" class="engines" aria-labelledby="motor-b">
+    <div class="wrap">
+      <h2 id="motor-b" data-i18n="eng_title">Önce yerel model, en son ücretli API</h2>
+      <p data-i18n="eng_desc">Her ajan isteği akıllı bir kuyruk yöneticisinden geçer. Sistem ilk olarak donanımındaki yerel modeli kullanır; gerekmedikçe harici API'lere tek kuruş harcatmaz.</p>
+      <div class="lanes">
+        <article class="lane l">
+          <header data-i18n="lane_l_title">1. Yerel Model</header>
+          <div data-i18n="lane_l_desc">Ekran kartında, tamamen ücretsiz. Ajanlar sırayla girer; sıra değiştiğinde ajanın bağlamı diske kaydedilir ve dönüşte <b>1–2 saniyede</b> geri yüklenir.<small>llama-server veya Ollama</small></div>
+        </article>
+        <article class="lane f">
+          <header data-i18n="lane_f_title">2. Ücretsiz API</header>
+          <div data-i18n="lane_f_desc">Yerel kuyrukta belirlenen süreden fazla bekleyen veya konuşması yerel model bağlamına sığmayan istek buraya taşar. Ajan baştan başlamaz.<small>EVREN Gateway, ücretsiz kotalı uç noktalar</small></div>
+        </article>
+        <article class="lane p">
+          <header data-i18n="lane_p_title">3. Ücretli API</header>
+          <div data-i18n="lane_p_desc">Ücretsiz motorlar kotaya takılırsa devreye girer. Kredisi biten veya kota hatası veren motor otomatik olarak 6 saat dinlendirilir.<small>Claude, Gemini, ChatGPT, Kimi, NVIDIA NIM...</small></div>
+        </article>
+      </div>
+      <h3 data-i18n="split_title">Claude Aboneliğinde %60 / %40 Kota Koruması</h3>
+      <p data-i18n="split_desc">Claude aboneliği kullanıyorsanız, 5 saatlik veya haftalık kullanım %60'a ulaştığında işçi ajanlar Claude kullanımını hemen kesip yerel motora döner. Kalan %40'lık kritik kota Genel Müdür'e ayrılır; böylece ofis yönetimi asla duraksamaz.</p>
+      <div class="split" role="img" aria-label="Kullanım Dağılımı"><span class="w" data-i18n="split_workers">İşçiler (Maks %60)</span><span class="b" data-i18n="split_boss">Genel Müdür (%40 Rezerve)</span></div>
+      <p class="back" data-i18n="eng_back">Harici API kalmazsa veya internet koparsa ajanlar yerel modelle çalışmaya devam eder. İşiniz yarım kalmaz.</p>
+    </div>
+  </section>
+
+  <!-- LOCAL -->
+  <section id="yerel" aria-labelledby="yerel-b">
+    <div class="wrap">
+      <h2 id="yerel-b" data-i18n="local_title">Bilgisayarın güçlüyse %100 ücretsiz çalış</h2>
+      <p data-i18n="local_desc">NVIDIA ekran kartın varsa (8 GB ve üstü), Ollama ile hazır modelleri kurup anında başlayabilirsin: token ücreti yok, API anahtarı yok, veri sızıntısı yok. Projedeki hazır betik modeli tek tıkla indirip ayarlar.</p>
+      <table class="tiers">
+        <thead>
+          <tr>
+            <th scope="col" data-i18n="th_gpu">Ekran Kartı (VRAM)</th>
+            <th scope="col" data-i18n="th_model">Yerel Model</th>
+            <th scope="col" data-i18n="th_use">Kullanım Alanı</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="gpu_tier0">Yok veya 6 GB altı</td>
+            <td>—</td>
+            <td data-i18n="use_tier0">Ajanlar API motorlarıyla çalışır (ücretsiz API'ler öncelikli)</td>
+          </tr>
+          <tr>
+            <td data-i18n="gpu_tier1">8 GB VRAM</td>
+            <td>emrettc-hafif (Qwen 4B)</td>
+            <td data-i18n="use_tier1">Basit işler, dosya analizleri, ultra hızlı yanıt</td>
+          </tr>
+          <tr>
+            <td data-i18n="gpu_tier2">10–16 GB VRAM</td>
+            <td class="win">emrettc-genel (Gemma 4 12B)</td>
+            <td data-i18n="use_tier2"><b>Önerilen:</b> Günlük tüm kodlama ve ofis işleri</td>
+          </tr>
+          <tr>
+            <td data-i18n="gpu_tier3">24 GB ve üstü</td>
+            <td>+ emrettc-kod, emrettc-analiz</td>
+            <td data-i18n="use_tier3">30B Kodlama ve derin analiz modelleri</td>
+          </tr>
+        </tbody>
+      </table>
+      <ol class="mini">
+        <li><b data-i18n="mini_step1">Ollama'yı kur:</b> <a href="https://ollama.com/download">ollama.com/download</a> <span data-i18n="mini_or">veya terminalde</span> <code>winget install Ollama.Ollama</code></li>
+        <li><b data-i18n="mini_step2">Optimize modeli indir:</b> Depo klasöründe <code>kurulum.cmd -Yerel</code> (<span data-i18n="mini_all">Dört model için:</span> <code>kurulum.cmd -Yerel -TumModeller</code>)</li>
+        <li><b data-i18n="mini_step3">Uygulamada seç:</b> <span data-i18n="mini_select">Ayarlar › Yapay Zekâ Motorları › Varsayılan işçi motoru →</span> <i>Genel İşler (emrettc-genel)</i></li>
+      </ol>
+      <p class="note" data-i18n="local_note">Ayrıntılı adımlar ve hızlandırma ipuçları için: <a href="https://github.com/emret-agency/emret-agency/blob/main/docs/OLLAMA-KURULUM.md">Ollama Kurulum Kılavuzu</a>.</p>
+    </div>
+  </section>
+
+  <!-- DETAILS -->
+  <section id="ayrinti" aria-labelledby="ayrinti-b">
+    <div class="wrap duo">
+      <div>
+        <h2 id="ayrinti-b" data-i18n="details_title">Motorların her ayrıntısı kontrol altında</h2>
+        <p data-i18n="details_desc">Ofis ekranındaki canlı panel sayesinde hangi ajanın yerelde, hangisinin API'de çalıştığını, kotaların durumunu ve donanım kullanımını anlık takip edersin:</p>
+        <ul class="ticks">
+          <li data-i18n="tick1"><b>Ekran kartı belleği ve VRAM takibi:</b> Modelin belleğe sığıp sığmadığını anlık izler.</li>
+          <li data-i18n="tick2"><b>Dahili hız testi (Benchmark):</b> Donanımının okuma/yazma hızını "Hızlı / Orta / Yavaş" olarak ölçer.</li>
+          <li data-i18n="tick3"><b>Kullanım sırası:</b> Yerel modele hangi ajanın önce gireceğini sürükle-bırak ile belirlersin.</li>
+          <li data-i18n="tick4"><b>Krediler ve kotalar:</b> Claude aboneliğinin 5 saatlik ve haftalık yüzdesi, %60 limitiyle grafiklenir.</li>
+          <li data-i18n="tick5"><b>Sabah raporu:</b> Her sabah Gelen Kutusu'na ve Telegram'a motorların sağlık durumu ve token harcamaları gelir.</li>
+          <li data-i18n="tick6"><b>SafeStorage şifreleme:</b> API anahtarları işletim sistemi seviyesinde şifrelenir; asla düz metin kaydedilmez.</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="img/motorlar.svg" width="560" height="520" alt="Motorlar paneli"></figure>
+    </div>
+  </section>
+
+  <!-- API -->
+  <section id="api" class="engines" aria-labelledby="api-b">
+    <div class="wrap">
+      <h2 id="api-b" data-i18n="api_title">Ücretsiz başla, dilediğinde API bağla</h2>
+      <p data-i18n="api_desc">Emret Agency tek bir kuruş harcamadan yerel modelle çalışabilir. Daha güçlü genel zekâya ihtiyaç duyduğunuzda dilediğiniz sağlayıcıyı tek tıkla eklersiniz:</p>
+      <dl class="feat">
+        <div><dt data-i18n="api_dt1">Yerel Model (Ollama & llama-server)</dt><dd data-i18n="api_dd1">Kendi bilgisayarınızda; sınırsız, sıfır token ücretiyle çalışan ana motor.</dd></div>
+        <div><dt data-i18n="api_dt2">Google Gemini (Flash & Pro)</dt><dd data-i18n="api_dd2">Hazır uç nokta; en son gemini-flash-latest ve gemini-pro-latest modelleriyle yüksek hız.</dd></div>
+        <div><dt data-i18n="api_dt3">OpenAI / ChatGPT</dt><dd data-i18n="api_dd3">GPT-4o, GPT-5 veya Codex CLI ile doğrudan ChatGPT aboneliğiniz üzerinden çalışma imkanı.</dd></div>
+        <div><dt data-i18n="api_dt4">Moonshot Kimi & NVIDIA NIM</dt><dd data-i18n="api_dd4">Anthropic uyumlu Kimi ve DeepSeek destekli NVIDIA NIM hazır entegrasyonları.</dd></div>
+        <div><dt data-i18n="api_dt5">EVREN LLM Gateway</dt><dd data-i18n="api_dd5">Kurumsal veya ücretsiz açık kaynak yapay zekâ uç noktaları için tam uyumluluk.</dd></div>
+        <div><dt data-i18n="api_dt6">Özel OpenAI / Anthropic Uç Noktaları</dt><dd data-i18n="api_dd6">Kendi sunucunuz, LM Studio veya vLLM adresini yazarak dilediğiniz modeli ekleyebilirsiniz.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CUSTOMIZE -->
+  <section id="sekillendir" aria-labelledby="sekil-b">
+    <div class="wrap duo">
+      <figure class="shot"><img src="img/sekillendir.svg" width="640" height="440" alt="Ofis düzenleyici"></figure>
+      <div>
+        <h2 id="sekil-b" data-i18n="custom_title">Ofisini ve ekibini dilediğin gibi şekillendir</h2>
+        <p data-i18n="custom_desc">Projeniz büyüdükçe ofisiniz de büyür. Çalışan ajanları durdurmadan ofisi, rolleri ve kuralları canlı olarak güncelleyebilirsiniz:</p>
+        <ul class="ticks">
+          <li data-i18n="c_tick1"><b>Piksel Ofis Düzenleyici:</b> Masaları sürükleyip bırakarak kendi ofis planınızı çizin.</li>
+          <li data-i18n="c_tick2"><b>Çoklu Proje Yönetimi:</b> Tek çatı altında birden çok müşteri projesi açın; her projenin çalışma alanı, görevleri ve hafızası ayrı tutulur.</li>
+          <li data-i18n="c_tick3"><b>Riskli İşlem Onay Kapısı:</b> Git push, veritabanı silme, toplu dosya silme gibi riskli komutlarda ajanlar senden onay ister.</li>
+          <li data-i18n="c_tick4"><b>Görsel Temalar:</b> Açık/koyu mod, özel renk paletleri ve kendi şirket logonuz.</li>
+          <li data-i18n="c_tick5"><b>Mobil Telegram Botu:</b> /durum, /ozet komutları ve onay bekleyen sorular doğrudan telefonunuza düşer.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENCHMARK -->
+  <section aria-labelledby="hiz-b">
+    <div class="wrap">
+      <h2 id="hiz-b" data-i18n="bench_title">Yerel ama rekor hızda</h2>
+      <p data-i18n="bench_desc">Yerel modellerde en büyük vakit kaybı, sıra başka ajana geçtiğinde ajanın 50 bin tokenlık konuşma geçmişini GPU'ya baştan okutmaktır. Emret Agency diske kaydedilen <b>ajan belleği (slot cache)</b> ile bu süreyi sıfırlar:</p>
+      <table>
+        <thead>
+          <tr>
+            <th scope="col" data-i18n="th_metric">Ölçüm</th>
+            <th scope="col" data-i18n="th_standard">Standart Kurulum</th>
+            <th scope="col" data-i18n="th_emret">Emret Agency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="b_row1">Ajan değişince 51 bin tokenlık hafızaya dönüş</td>
+            <td data-i18n="b_row1_std">~30 saniye (baştan okur)</td>
+            <td class="win" data-i18n="b_row1_win">~2 saniye (diskten anında yükler)</td>
+          </tr>
+          <tr>
+            <td data-i18n="b_row2">Bir ajan isteminin optimize boyutu</td>
+            <td data-i18n="b_row2_std">~15 bin token</td>
+            <td class="win" data-i18n="b_row2_win">~7,9 bin token</td>
+          </tr>
+          <tr>
+            <td data-i18n="b_row3">İstem okuma hızı (Prompt eval)</td>
+            <td data-i18n="b_row3_std">1100–1300 token/sn</td>
+            <td class="win" data-i18n="b_row3_win">1500–2100 token/sn</td>
+          </tr>
+          <tr>
+            <td data-i18n="b_row4">VRAM bellek tüketimi</td>
+            <td data-i18n="b_row4_std">9,7 GB</td>
+            <td class="win" data-i18n="b_row4_win">9,2 GB (q8 önbellek)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note" data-i18n="bench_note">Ölçümler: RTX 3080 10 GB, Gemma 4 12B, 64K bağlam boyutu. Uygulama içerisindeki Hız Testi kendi bilgisayarınızı ölçer.</p>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section aria-labelledby="ozellik-b" style="padding-top:0">
+    <div class="wrap">
+      <h2 id="ozellik-b" data-i18n="feat_title">Öne çıkan tüm yetenekler</h2>
+      <dl class="feat">
+        <div><dt data-i18n="f_dt1">Çoklu CLI Ajan Desteği</dt><dd data-i18n="f_dd1">Claude Code, OpenCode, Codex, Crush, pi ve dilediğiniz CLI ajanı aynı anda tek ofiste.</dd></div>
+        <div><dt data-i18n="f_dt2">Devam Noktası (devam.md)</dt><dd data-i18n="f_dd2">Ajanlar kaldığı yeri küçük notlarla hatırlar; oturum kapansa bile geçmişi baştan okumadan işine devam eder.</dd></div>
+        <div><dt data-i18n="f_dt3">Bana Sor & Gelen Kutusu</dt><dd data-i18n="f_dd3">Ajanların mimari soruları ve onay bekleyen kararları menüde kırmızı rozetle toplanır.</dd></div>
+        <div><dt data-i18n="f_dt4">İnceleme Masası (Review Desk)</dt><dd data-i18n="f_dd4">Ajanların git dallarını inceler; tek tıkla farkları (diff) görür, testleri çalıştırır ve merge/revert yaparsın.</dd></div>
+        <div><dt data-i18n="f_dt5">Çoklu Proje Çalışma Alanı</dt><dd data-i18n="f_dd5">Her proje için ayrı bir izole ofis kopyası açılır; bütçe ve görevler birbirine karışmaz.</dd></div>
+        <div><dt data-i18n="f_dt6">Güvenli Kasa (SafeStorage)</dt><dd data-i18n="f_dd6">Tüm API anahtarlarınız işletim sistemi düzeyinde şifreli saklanır, repoya ya da diske düz metin yazılmaz.</dd></div>
+        <div><dt data-i18n="f_dt7">Telegram Bildirimleri</dt><dd data-i18n="f_dd7">Ofisin durumu, sabah özetleri ve acil sorular doğrudan cebinizdeki Telegram botuna gelir.</dd></div>
+        <div><dt data-i18n="f_dt8">Tek Tıkla Windows Dağıtımı</dt><dd data-i18n="f_dd8">npm run dist:win ile projeyi kurulabilir bir masaüstü (.exe) programı haline getirebilirsiniz.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- SCREEN TOUR -->
+  <section aria-labelledby="tur-b" style="padding-top:0">
+    <div class="wrap">
+      <h2 id="tur-b" data-i18n="tour_title">Arayüz turu</h2>
+      <div class="tour">
+        <figure><img src="img/ekran.svg" width="1000" height="560" alt="Ana ekran"></figure>
+        <ol>
+          <li><span data-i18n="tour_1"><b>Yerel Motor Paneli</b> — Ekran kartı belleği, kuyrukta bekleyenler, API'ye taşanlar.</span></li>
+          <li><span data-i18n="tour_2"><b>Piksel Ofis</b> — Masalarında çalışan ajanlar ve anlık durum balonları.</span></li>
+          <li><span data-i18n="tour_3"><b>Komuta Merkezi</b> — Sohbet, Terminal, Canlı İzleme ve Bana Sor paneli.</span></li>
+          <li><span data-i18n="tour_4"><b>Mesaj ve Dosya Kutusu</b> — Sürükle-bırak dosya paylaşımı ve ajan iletişim hattı.</span></li>
+          <li><span data-i18n="tour_5"><b>Ajan Kartları</b> — Yeşil (Yerel) / Kırmızı (API) rozetleriyle çalışan personelin listesi.</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="kurulum" class="install" aria-labelledby="kur-b">
+    <div class="wrap">
+      <h2 id="kur-b" data-i18n="inst_title">Hızlı Kurulum ve Çalıştırma</h2>
+      <p style="color:#DCD6E2" data-i18n="inst_desc">Windows 10/11 için sıfırdan kurulum. Kurulum betiği gerekli araçları otomatik kontrol eder.</p>
+      <ol class="steps">
+        <li>
+          <div>
+            <h3 data-i18n="step1_h">1. Depoyu İndirin</h3>
+            <p data-i18n="step1_p">GitHub deposunu bilgisayarınıza klonlayın ve klasöre girin:</p>
+            <div class="cmd">
+              <pre>git clone https://github.com/emret-agency/emret-agency.git
+cd emret-agency</pre>
+              <button type="button" data-copy data-i18n="btn_copy">Kopyala</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="step2_h">2. Ollama'yı Kurun (Ücretsiz Yerel Motor — İsteğe Bağlı)</h3>
+            <p data-i18n="step2_p">Ekran kartınız 8 GB ve üstü ise kurun; yoksa bu adımı atlayıp doğrudan API ile çalışabilirsiniz.</p>
+            <div class="cmd">
+              <pre>winget install Ollama.Ollama</pre>
+              <button type="button" data-copy data-i18n="btn_copy">Kopyala</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="step3_h">3. Kurulum Betiğini Çalıştırın</h3>
+            <p data-i18n="step3_p">Yerel modelle birlikte kurmak için -Yerel parametresi ekleyin (Gemma 4 12B modelini otomatik indirir):</p>
+            <div class="cmd">
+              <pre>kurulum.cmd -Yerel</pre>
+              <button type="button" data-copy data-i18n="btn_copy">Kopyala</button>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 data-i18n="step4_h">4. Uygulamayı Başlatın</h3>
+            <p data-i18n="step4_p">Açılan terminal penceresi uygulama açık olduğu sürece açık kalmalıdır:</p>
+            <div class="cmd">
+              <pre>baslat.cmd</pre>
+              <button type="button" data-copy data-i18n="btn_copy">Kopyala</button>
+            </div>
+          </div>
+        </li>
+      </ol>
+      <div style="margin-top:28px;padding:20px;background:#201729;border:2px solid var(--local);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <h3 style="color:#fff;margin:0 0 6px;" data-i18n="card_guide_title">Ekran Görüntüleriyle Adım Adım Kurulum Rehberi</h3>
+          <p style="color:#DCD6E2;margin:0;font-size:16px;" data-i18n="card_guide_desc">API anahtarlarını girme, yeni çalışma alanı klasörü oluşturma ve ilk işi vermeyi anlatan resimli rehber:</p>
+        </div>
+        <a class="btn go" href="kurulum.html" style="font-size:16px;padding:10px 18px;" data-i18n="btn_open_guide">Resimli Rehberi Aç &rarr;</a>
+      </div>
+      <p class="more">
+        <span data-i18n="more_text">Ayrıntılı adımlar, API bağlama ve program olarak (.exe) paketleme:</span> 
+        <a class="link" href="https://github.com/emret-agency/emret-agency/blob/main/docs/KURULUM.md" data-i18n="link_kurulum">Kurulum Kılavuzu (KURULUM.md)</a> · 
+        <a class="link" href="https://github.com/emret-agency/emret-agency/blob/main/docs/OLLAMA-KURULUM.md" data-i18n="link_ollama">Ollama Yerel Model Rehberi</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="sss" aria-labelledby="sss-b">
+    <div class="wrap">
+      <h2 id="sss-b" data-i18n="faq_title">Sıkça Sorulan Sorular</h2>
+      <details>
+        <summary data-i18n="faq_q1">Çalıştırmak için para veya token ödemem gerekir mi?</summary>
+        <p data-i18n="faq_a1">Hayır! Yerel modelle (Ollama veya llama-server) çalıştığınızda sıfır maliyetle sınırsız kod yazdırabilirsiniz. Harici API'ler yalnızca siz bir API anahtarı eklediğinizde veya yerel model bağlamı aşıldığında devreye girer.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq_q2">Hangi ekran kartına ihtiyacım var?</summary>
+        <p data-i18n="faq_a2">Önerilen genel model (Gemma 4 12B) 10 GB ekran kartına tam sığar. 8 GB VRAM kartlarda hafif model (Qwen 4B), 24 GB kartlarda ise kod ve analiz modelleri rahatça çalışır. Ekran kartınız yoksa Ollama kurmanıza gerek yoktur; doğrudan ücretsiz veya ücretli API'lerle çalışabilirsiniz.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq_q3">Uygulamayı tek bir kurulabilir program (.exe) haline getirebilir miyim?</summary>
+        <p data-i18n="faq_a3">Evet! Depo klasöründe npm run dist:win komutunu çalıştırarak dist/ klasöründe çift tıklanarak kurulan Windows kurulum dosyasını (.exe) üretebilir ve başkalarına dağıtabilirsiniz.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq_q4">Projelerim ve API anahtarlarım güvende mi?</summary>
+        <p data-i18n="faq_a4">Kesinlikle evet. Emret Agency verilerinizi herhangi bir harici buluta veya telemetri sunucusuna göndermez. API anahtarlarınız Windows DPAPI (Electron safeStorage) ile şifrelenir; kodlarınız yalnızca seçtiğiniz çalışma klasöründe yerel olarak tutulur.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq_q5">İnternet bağlantım olmadan çalışır mı?</summary>
+        <p data-i18n="faq_a5">Evet. Yerel yapay zekâ modeli ve işçi ajanlar tamamen çevrimdışı (offline) çalışabilir. Genel Müdür'ü de yerel motora bağlarsanız ofisin tamamı internetsiz bir dağ evinde bile kod yazmaya devam eder.</p>
+      </details>
+      <details>
+        <summary data-i18n="faq_q6">Ajanlar bilgisayarıma veya kodlarıma zarar verebilir mi?</summary>
+        <p data-i18n="faq_a6">Hayır, dahili Risk Kapısı (Risk Gate) sayesinde ajanlar toplu dosya silme, git push, veritabanı drop gibi riskli komutları çalıştırmadan önce terminalde veya Bana Sor sayfasında sizden açıkça onay ister.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- DONATE -->
+  <section class="give-sec" aria-labelledby="bagis-b">
+    <div class="wrap">
+      <div>
+        <h2 id="bagis-b" data-i18n="give_title">Ofisi birlikte büyütelim</h2>
+        <p data-i18n="give_desc">Emret Agency %100 açık kaynak ve özgür bir projedir. Geliştirmeyi desteklemek, yeni yerel model optimizasyonlarına ve yeni özelliklere katkıda bulunmak için bağış yapabilirsiniz.</p>
+      </div>
+      <a class="btn" data-bagis href="https://donate.bynogame.com/emrettc" data-i18n="btn_donate_now">Bağış Yap</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span data-i18n="footer_license">Emret Agency · MIT Lisansı ile Özgür Yazılım</span>
+    <span>
+      <a href="https://github.com/emret-agency/emret-agency" data-i18n="f_repo">GitHub Deposu</a> · 
+      <a href="kurulum.html" data-i18n="f_visual_guide">Resimli Kurulum Rehberi</a> · 
+      <a href="https://github.com/emret-agency/emret-agency/blob/main/docs/KURULUM.md" data-i18n="f_guide">Kurulum Kılavuzu</a> · 
+      <a href="https://github.com/emret-agency/emret-agency/blob/main/docs/OLLAMA-KURULUM.md" data-i18n="f_ollama">Ollama Rehberi</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  // Dil Sözlüğü (TR & EN)
+  const translations = {
+    tr: {
+      meta_title: "Emret Agency — Kendi Bilgisayarında Çalışan Yapay Zekâ Ajan Ofisi",
+      nav_engines: "Motorlar",
+      nav_local: "Yerel Model",
+      nav_features: "Özellikler",
+      nav_setup: "Hızlı Kurulum",
+      nav_visual_guide: "★ Resimli Kurulum Rehberi",
+      nav_docs: "Kılavuz",
+      nav_donate: "Bağış yap",
+      hero_badge: "AÇIK KAYNAKLI & YEREL MOTOR DESTEKLİ",
+      hero_title: "Ofisin senin bilgisayarında.",
+      hero_desc: "Emret Agency, kodlama ajanlarından oluşan otonom bir ekip kurar: <b>Genel Müdür</b> işi planlayıp dağıtır, işçi ajanlar piksel ofiste masalarında kod yazar. Mümkün olan tüm işler senin ekran kartındaki yerel yapay zekâ ile <b>sıfır token ücretiyle</b> yapılır; istersen API bağlayıp ekibini devasa projelere büyütürsün.",
+      cta_github: "GitHub'dan İndir",
+      cta_guide: "Resimli Kurulum Rehberi",
+      cta_ollama: "Ollama Rehberi",
+      cta_donate: "Destekle",
+      flow_title: "Bir çalışan değil, tam donanımlı bir ofis",
+      flow_desc: "Tek bir kodlama ajanıyla çalışmak, tek bir çalışanla çalışmak gibidir: ona iş verirsin ve bitene kadar terminal başında beklersin. Emret Agency bunu çoklu ajanlı otonom bir yazılım şirketine dönüştürür:",
+      flow_who1: "1 · Sen (Yönetici)",
+      flow_p1: "Komuta Merkezi'nde Genel Müdür'e hedefini söylersin. Ajanların onay isteyen kritik sorularını <b>Bana Sor</b> panosunda yanıtlarsın.",
+      flow_who2: "2 · Genel Müdür (Orkestratör)",
+      flow_p2: "İsteğini mimari adımlara böler, işçileri göreve çağırır, görevleri dağıtır, süreci denetler ve sonucu sana özetler.",
+      flow_who3: "3 · İşçi Ajanlar (Uzman Ekip)",
+      flow_p3: "Developer, Tasarımcı, Araştırmacı, Reklamcı... Her biri kendi izole çalışma klasöründe çalışır, biten kodları <b>İnceleme Masası</b>'na bırakır.",
+      eng_title: "Önce yerel model, en son ücretli API",
+      eng_desc: "Her ajan isteği akıllı bir kuyruk yöneticisinden geçer. Sistem ilk olarak donanımındaki yerel modeli kullanır; gerekmedikçe harici API'lere tek kuruş harcatmaz.",
+      lane_l_title: "1. Yerel Model",
+      lane_l_desc: "Ekran kartında, tamamen ücretsiz. Ajanlar sırayla girer; sıra değiştiğinde ajanın bağlamı diske kaydedilir ve dönüşte <b>1–2 saniyede</b> geri yüklenir.<small>llama-server veya Ollama</small>",
+      lane_f_title: "2. Ücretsiz API",
+      lane_f_desc: "Yerel kuyrukta belirlenen süreden fazla bekleyen veya konuşması yerel model bağlamına sığmayan istek buraya taşar. Ajan baştan başlamaz.<small>EVREN Gateway, ücretsiz kotalı uç noktalar</small>",
+      lane_p_title: "3. Ücretli API",
+      lane_p_desc: "Ücretsiz motorlar kotaya takılırsa devreye girer. Kredisi biten veya kota hatası veren motor otomatik olarak 6 saat dinlendirilir.<small>Claude, Gemini, ChatGPT, Kimi, NVIDIA NIM...</small>",
+      split_title: "Claude Aboneliğinde %60 / %40 Kota Koruması",
+      split_desc: "Claude aboneliği kullanıyorsanız, 5 saatlik veya haftalık kullanım %60'a ulaştığında işçi ajanlar Claude kullanımını hemen kesip yerel motora döner. Kalan %40'lık kritik kota Genel Müdür'e ayrılır; böylece ofis yönetimi asla duraksamaz.",
+      split_workers: "İşçiler (Maks %60)",
+      split_boss: "Genel Müdür (%40 Rezerve)",
+      eng_back: "Harici API kalmazsa veya internet koparsa ajanlar yerel modelle çalışmaya devam eder. İşiniz yarım kalmaz.",
+      local_title: "Bilgisayarın güçlüyse %100 ücretsiz çalış",
+      local_desc: "NVIDIA ekran kartın varsa (8 GB ve üstü), Ollama ile hazır modelleri kurup anında başlayabilirsin: token ücreti yok, API anahtarı yok, veri sızıntısı yok. Projedeki hazır betik modeli tek tıkla indirip ayarlar.",
+      th_gpu: "Ekran Kartı (VRAM)",
+      th_model: "Yerel Model",
+      th_use: "Kullanım Alanı",
+      gpu_tier0: "Yok veya 6 GB altı",
+      use_tier0: "Ajanlar API motorlarıyla çalışır (ücretsiz API'ler öncelikli)",
+      gpu_tier1: "8 GB VRAM",
+      use_tier1: "Basit işler, dosya analizleri, ultra hızlı yanıt",
+      gpu_tier2: "10–16 GB VRAM",
+      use_tier2: "Önerilen: Günlük tüm kodlama ve ofis işleri",
+      gpu_tier3: "24 GB ve üstü",
+      use_tier3: "30B Kodlama ve derin analiz modelleri",
+      mini_step1: "Ollama'yı kur:",
+      mini_or: "veya terminalde",
+      mini_step2: "Optimize modeli indir:",
+      mini_all: "Dört model için:",
+      mini_step3: "Uygulamada seç:",
+      mini_select: "Ayarlar › Yapay Zekâ Motorları › Varsayılan işçi motoru →",
+      local_note: "Ayrıntılı adımlar ve hızlandırma ipuçları için: Ollama Kurulum Kılavuzu.",
+      details_title: "Motorların her ayrıntısı kontrol altında",
+      details_desc: "Ofis ekranındaki canlı panel sayesinde hangi ajanın yerelde, hangisinin API'de çalıştığını, kotaların durumunu ve donanım kullanımını anlık takip edersin:",
+      tick1: "<b>Ekran kartı belleği ve VRAM takibi:</b> Modelin belleğe sığıp sığmadığını anlık izler.",
+      tick2: "<b>Dahili hız testi (Benchmark):</b> Donanımının okuma/yazma hızını 'Hızlı / Orta / Yavaş' olarak ölçer.",
+      tick3: "<b>Kullanım sırası:</b> Yerel modele hangi ajanın önce gireceğini sürükle-bırak ile belirlersin.",
+      tick4: "<b>Krediler ve kotalar:</b> Claude aboneliğinin 5 saatlik ve haftalık yüzdesi, %60 limitiyle grafiklenir.",
+      tick5: "<b>Sabah raporu:</b> Her sabah Gelen Kutusu'na ve Telegram'a motorların sağlık durumu ve token harcamaları gelir.",
+      tick6: "<b>SafeStorage şifreleme:</b> API anahtarları işletim sistemi seviyesinde şifrelenir; asla düz metin kaydedilmez.",
+      api_title: "Ücretsiz başla, dilediğinde API bağla",
+      api_desc: "Emret Agency tek bir kuruş harcamadan yerel modelle çalışabilir. Daha güçlü genel zekâya ihtiyaç duyduğunuzda dilediğiniz sağlayıcıyı tek tıkla eklersiniz:",
+      api_dt1: "Yerel Model (Ollama & llama-server)",
+      api_dd1: "Kendi bilgisayarınızda; sınırsız, sıfır token ücretiyle çalışan ana motor.",
+      api_dt2: "Google Gemini (Flash & Pro)",
+      api_dd2: "Hazır uç nokta; en son gemini-flash-latest ve gemini-pro-latest modelleriyle yüksek hız.",
+      api_dt3: "OpenAI / ChatGPT",
+      api_dd3: "GPT-4o, GPT-5 veya Codex CLI ile doğrudan ChatGPT aboneliğiniz üzerinden çalışma imkanı.",
+      api_dt4: "Moonshot Kimi & NVIDIA NIM",
+      api_dd4: "Anthropic uyumlu Kimi ve DeepSeek destekli NVIDIA NIM hazır entegrasyonları.",
+      api_dt5: "EVREN LLM Gateway",
+      api_dd5: "Kurumsal veya ücretsiz açık kaynak yapay zekâ uç noktaları için tam uyumluluk.",
+      api_dt6: "Özel OpenAI / Anthropic Uç Noktaları",
+      api_dd6: "Kendi sunucunuz, LM Studio veya vLLM adresini yazarak dilediğiniz modeli ekleyebilirsiniz.",
+      custom_title: "Ofisini ve ekibini dilediğin gibi şekillendir",
+      custom_desc: "Projeniz büyüdükçe ofisiniz de büyür. Çalışan ajanları durdurmadan ofisi, rolleri ve kuralları canlı olarak güncelleyebilirsiniz:",
+      c_tick1: "<b>Piksel Ofis Düzenleyici:</b> Masaları sürükleyip bırakarak kendi ofis planınızı çizin.",
+      c_tick2: "<b>Çoklu Proje Yönetimi:</b> Tek çatı altında birden çok müşteri projesi açın; her projenin çalışma alanı, görevleri ve hafızası ayrı tutulur.",
+      c_tick3: "<b>Riskli İşlem Onay Kapısı:</b> Git push, veritabanı silme, toplu dosya silme gibi riskli komutlarda ajanlar senden onay ister.",
+      c_tick4: "<b>Görsel Temalar:</b> Açık/koyu mod, özel renk paletleri ve kendi şirket logonuz.",
+      c_tick5: "<b>Mobil Telegram Botu:</b> /durum, /ozet komutları ve onay bekleyen sorular doğrudan telefonunuza düşer.",
+      bench_title: "Yerel ama rekor hızda",
+      bench_desc: "Yerel modellerde en büyük vakit kaybı, sıra başka ajana geçtiğinde ajanın 50 bin tokenlık konuşma geçmişini GPU'ya baştan okutmaktır. Emret Agency diske kaydedilen <b>ajan belleği (slot cache)</b> ile bu süreyi sıfırlar:",
+      th_metric: "Ölçüm",
+      th_standard: "Standart Kurulum",
+      th_emret: "Emret Agency",
+      b_row1: "Ajan değişince 51 bin tokenlık hafızaya dönüş",
+      b_row1_std: "~30 saniye (baştan okur)",
+      b_row1_win: "~2 saniye (diskten anında yükler)",
+      b_row2: "Bir ajan isteminin optimize boyutu",
+      b_row2_std: "~15 bin token",
+      b_row2_win: "~7,9 bin token",
+      b_row3: "İstem okuma hızı (Prompt eval)",
+      b_row3_std: "1100–1300 token/sn",
+      b_row3_win: "1500–2100 token/sn",
+      b_row4: "VRAM bellek tüketimi",
+      b_row4_std: "9,7 GB",
+      b_row4_win: "9,2 GB (q8 önbellek)",
+      bench_note: "Ölçümler: RTX 3080 10 GB, Gemma 4 12B, 64K bağlam boyutu. Uygulama içerisindeki Hız Testi kendi bilgisayarınızı ölçer.",
+      feat_title: "Öne çıkan tüm yetenekler",
+      f_dt1: "Çoklu CLI Ajan Desteği",
+      f_dd1: "Claude Code, OpenCode, Codex, Crush, pi ve dilediğiniz CLI ajanı aynı anda tek ofiste.",
+      f_dt2: "Devam Noktası (devam.md)",
+      f_dd2: "Ajanlar kaldığı yeri küçük notlarla hatırlar; oturum kapansa bile geçmişi baştan okumadan işine devam eder.",
+      f_dt3: "Bana Sor & Gelen Kutusu",
+      f_dd3: "Ajanların mimari soruları ve onay bekleyen kararları menüde kırmızı rozetle toplanır.",
+      f_dt4: "İnceleme Masası (Review Desk)",
+      f_dd4: "Ajanların git dallarını inceler; tek tıkla farkları (diff) görür, testleri çalıştırır ve merge/revert yaparsın.",
+      f_dt5: "Çoklu Proje Çalışma Alanı",
+      f_dd5: "Her proje için ayrı bir izole ofis kopyası açılır; bütçe ve görevler birbirine karışmaz.",
+      f_dt6: "Güvenli Kasa (SafeStorage)",
+      f_dd6: "Tüm API anahtarlarınız işletim sistemi düzeyinde şifreli saklanır, repoya ya da diske düz metin yazılmaz.",
+      f_dt7: "Telegram Bildirimleri",
+      f_dd7: "Ofisin durumu, sabah özetleri ve acil sorular doğrudan cebinizdeki Telegram botuna gelir.",
+      f_dt8: "Tek Tıkla Windows Dağıtımı",
+      f_dd8: "npm run dist:win ile projeyi kurulabilir bir masaüstü (.exe) programı haline getirebilirsiniz.",
+      tour_title: "Arayüz turu",
+      tour_1: "<b>Yerel Motor Paneli</b> — Ekran kartı belleği, kuyrukta bekleyenler, API'ye taşanlar.",
+      tour_2: "<b>Piksel Ofis</b> — Masalarında çalışan ajanlar ve anlık durum balonları.",
+      tour_3: "<b>Komuta Merkezi</b> — Sohbet, Terminal, Canlı İzleme ve Bana Sor paneli.",
+      tour_4: "<b>Mesaj ve Dosya Kutusu</b> — Sürükle-bırak dosya paylaşımı ve ajan iletişim hattı.",
+      tour_5: "<b>Ajan Kartları</b> — Yeşil (Yerel) / Kırmızı (API) rozetleriyle çalışan personelin listesi.",
+      inst_title: "Hızlı Kurulum ve Çalıştırma",
+      inst_desc: "Windows 10/11 için sıfırdan kurulum. Kurulum betiği gerekli araçları otomatik kontrol eder.",
+      step1_h: "1. Depoyu İndirin",
+      step1_p: "GitHub deposunu bilgisayarınıza klonlayın ve klasöre girin:",
+      step2_h: "2. Ollama'yı Kurun (Ücretsiz Yerel Motor — İsteğe Bağlı)",
+      step2_p: "Ekran kartınız 8 GB ve üstü ise kurun; yoksa bu adımı atlayıp doğrudan API ile çalışabilirsiniz.",
+      step3_h: "3. Kurulum Betiğini Çalıştırın",
+      step3_p: "Yerel modelle birlikte kurmak için -Yerel parametresi ekleyin (Gemma 4 12B modelini otomatik indirir):",
+      step4_h: "4. Uygulamayı Başlatın",
+      step4_p: "Açılan terminal penceresi uygulama açık olduğu sürece açık kalmalıdır:",
+      btn_copy: "Kopyala",
+      card_guide_title: "Ekran Görüntüleriyle Adım Adım Kurulum Rehberi",
+      card_guide_desc: "API anahtarlarını girme, yeni çalışma alanı klasörü oluşturma ve ilk işi vermeyi anlatan resimli rehber:",
+      btn_open_guide: "Resimli Rehberi Aç →",
+      more_text: "Ayrıntılı adımlar, API bağlama ve program olarak (.exe) paketleme:",
+      link_kurulum: "Kurulum Kılavuzu (KURULUM.md)",
+      link_ollama: "Ollama Yerel Model Rehberi",
+      faq_title: "Sıkça Sorulan Sorular",
+      faq_q1: "Çalıştırmak için para veya token ödemem gerekir mi?",
+      faq_a1: "Hayır! Yerel modelle (Ollama veya llama-server) çalıştığınızda sıfır maliyetle sınırsız kod yazdırabilirsiniz. Harici API'ler yalnızca siz bir API anahtarı eklediğinizde veya yerel model bağlamı aşıldığında devreye girer.",
+      faq_q2: "Hangi ekran kartına ihtiyacım var?",
+      faq_a2: "Önerilen genel model (Gemma 4 12B) 10 GB ekran kartına tam sığar. 8 GB VRAM kartlarda hafif model (Qwen 4B), 24 GB kartlarda ise kod ve analiz modelleri rahatça çalışır. Ekran kartınız yoksa Ollama kurmanıza gerek yoktur; doğrudan ücretsiz veya ücretli API'lerle çalışabilirsiniz.",
+      faq_q3: "Uygulamayı tek bir kurulabilir program (.exe) haline getirebilir miyim?",
+      faq_a3: "Evet! Depo klasöründe npm run dist:win komutunu çalıştırarak dist/ klasöründe çift tıklanarak kurulan Windows kurulum dosyasını (.exe) üretebilir ve başkalarına dağıtabilirsiniz.",
+      faq_q4: "Projelerim ve API anahtarlarım güvende mi?",
+      faq_a4: "Kesinlikle evet. Emret Agency verilerinizi herhangi bir harici buluta veya telemetri sunucusuna göndermez. API anahtarlarınız Windows DPAPI (Electron safeStorage) ile şifrelenir; kodlarınız yalnızca seçtiğiniz çalışma klasöründe yerel olarak tutulur.",
+      faq_q5: "İnternet bağlantım olmadan çalışır mı?",
+      faq_a5: "Evet. Yerel yapay zekâ modeli ve işçi ajanlar tamamen çevrimdışı (offline) çalışabilir. Genel Müdür'ü de yerel motora bağlarsanız ofisin tamamı internetsiz bir dağ evinde bile kod yazmaya devam eder.",
+      faq_q6: "Ajanlar bilgisayarıma veya kodlarıma zarar verebilir mi?",
+      faq_a6: "Hayır, dahili Risk Kapısı (Risk Gate) sayesinde ajanlar toplu dosya silme, git push, veritabanı drop gibi riskli komutları çalıştırmadan önce terminalde veya Bana Sor sayfasında sizden açıkça onay ister.",
+      give_title: "Ofisi birlikte büyütelim",
+      give_desc: "Emret Agency %100 açık kaynak ve özgür bir projedir. Geliştirmeyi desteklemek, yeni yerel model optimizasyonlarına ve yeni özelliklere katkıda bulunmak için bağış yapabilirsiniz.",
+      btn_donate_now: "Bağış Yap",
+      footer_license: "Emret Agency · MIT Lisansı ile Özgür Yazılım",
+      f_repo: "GitHub Deposu",
+      f_visual_guide: "Resimli Kurulum Rehberi",
+      f_guide: "Kurulum Kılavuzu",
+      f_ollama: "Ollama Rehberi"
+    },
+    en: {
+      meta_title: "Emret Agency — Autonomous AI Agent Office on Your Machine",
+      nav_engines: "Engines",
+      nav_local: "Local Model",
+      nav_features: "Features",
+      nav_setup: "Quick Setup",
+      nav_visual_guide: "★ Visual Setup Guide",
+      nav_docs: "Docs",
+      nav_donate: "Sponsor",
+      hero_badge: "OPEN SOURCE & LOCAL AI MODEL SUPPORTED",
+      hero_title: "Your AI office on your local machine.",
+      hero_desc: "Emret Agency runs an autonomous coding agent team on your computer: <b>General Manager</b> breaks down requirements and delegates tasks, while worker agents write code at pixel desks. Works on your local GPU with <b>zero token fees</b>; connect APIs whenever you want to scale up to massive projects.",
+      cta_github: "Download on GitHub",
+      cta_guide: "Visual Setup Guide",
+      cta_ollama: "Ollama Guide",
+      cta_donate: "Support",
+      flow_title: "Not a single worker, a full-fledged office",
+      flow_desc: "Working with a single coding agent is like managing one contractor: you assign a task and wait at the terminal until it finishes. Emret Agency turns it into a multi-agent autonomous software agency:",
+      flow_who1: "1 · You (Founder & Lead)",
+      flow_p1: "State your target in Command Center. Review and approve critical questions or approvals on the <b>Ask Me</b> board.",
+      flow_who2: "2 · General Manager (Orchestrator)",
+      flow_p2: "Decomposes goals into architecture phases, spins up workers, assigns tasks, supervises progress and reports summaries.",
+      flow_who3: "3 · Worker Agents (Specialists)",
+      flow_p3: "Developer, Designer, Researcher, Copywriter... Each works in their isolated git worktree and sends pull requests to the <b>Review Desk</b>.",
+      eng_title: "Local model first, paid API last",
+      eng_desc: "Every request passes through an intelligent priority gate. The system prioritizes your local GPU hardware, saving your wallet from cloud API costs.",
+      lane_l_title: "1. Local Model",
+      lane_l_desc: "Runs on your graphics card, 100% free. Agents queue smoothly; agent memory is saved to disk and restored in <b>1–2 seconds</b>.<small>llama-server or Ollama</small>",
+      lane_f_title: "2. Free API",
+      lane_f_desc: "Requests that exceed local queue wait limits or context limits overflow here automatically without restarting the agent.<small>EVREN Gateway, free-tier endpoints</small>",
+      lane_p_title: "3. Paid API",
+      lane_p_desc: "Engaged only if free tiers are exhausted. Quota-limited or credit-drained engines are cooled down for 6 hours.<small>Claude, Gemini, ChatGPT, Kimi, NVIDIA NIM...</small>",
+      split_title: "60% / 40% Subscription Quota Protection",
+      split_desc: "If using a Claude subscription, worker agents stop using Claude as soon as 5-hour or weekly usage hits 60%, falling back to local models. The remaining 40% is reserved for General Manager, ensuring orchestrator oversight never stalls.",
+      split_workers: "Workers (Max 60%)",
+      split_boss: "General Manager (40% Reserved)",
+      eng_back: "If cloud APIs are unavailable or internet drops, agents continue seamlessly on your local engine. Work never halts.",
+      local_title: "Run 100% free with your GPU hardware",
+      local_desc: "If you have an NVIDIA GPU (8 GB+ VRAM), launch with Ollama in minutes: no API keys, zero token fees, zero data leaks. The bundled installer script pulls and builds models with one command.",
+      th_gpu: "GPU VRAM",
+      th_model: "Local Model",
+      th_use: "Recommended Use",
+      gpu_tier0: "None / Under 6 GB",
+      use_tier0: "Agents run on cloud API engines (free-tier first)",
+      gpu_tier1: "8 GB VRAM",
+      use_tier1: "Light tasks, file inspections, ultra-fast responses",
+      gpu_tier2: "10–16 GB VRAM",
+      use_tier2: "Recommended: All daily coding, testing & office tasks",
+      gpu_tier3: "24 GB & Above",
+      use_tier3: "Heavy 30B coding & deep reasoning architectures",
+      mini_step1: "Install Ollama:",
+      mini_or: "or in terminal",
+      mini_step2: "Download optimized model:",
+      mini_all: "For all 4 models:",
+      mini_step3: "Select in App:",
+      mini_select: "Settings › AI Engines › Default Worker Engine →",
+      local_note: "For deep benchmarks and slot memory acceleration: check Ollama Setup Guide.",
+      details_title: "Every engine metric under control",
+      details_desc: "Monitor which agent runs locally vs. in the cloud, track VRAM usage, and view remaining quotas in real-time from the dashboard:",
+      tick1: "<b>VRAM telemetry:</b> Real-time GPU memory monitoring to verify model residency.",
+      tick2: "<b>Built-in Benchmark:</b> Speed test measures token read/eval speeds as 'Fast / Moderate / Slow'.",
+      tick3: "<b>Queue priority:</b> Drag-and-drop to decide which agent gains local model access first.",
+      tick4: "<b>Credits & limits:</b> Visual progress gauges for Claude 5-hour & weekly limits with the 60% mark.",
+      tick5: "<b>Morning Briefing:</b> Daily health reports and token consumption delivered to your Inbox & Telegram.",
+      tick6: "<b>SafeStorage vault:</b> API keys are securely encrypted using OS keychain (Windows DPAPI); never plaintext.",
+      api_title: "Start free, plug APIs whenever you need",
+      api_desc: "Emret Agency runs completely offline on local open models. Plug in external APIs with one click when you need cloud horsepower:",
+      api_dt1: "Local Engine (Ollama & llama-server)",
+      api_dd1: "Runs entirely on your machine with unlimited tokens and zero cost.",
+      api_dt2: "Google Gemini (Flash & Pro)",
+      api_dd2: "Out of the box support for gemini-flash-latest and gemini-pro-latest with extreme velocity.",
+      api_dt3: "OpenAI / ChatGPT",
+      api_dd3: "GPT-4o, GPT-5 or direct ChatGPT subscription authorization via Codex CLI.",
+      api_dt4: "Moonshot Kimi & NVIDIA NIM",
+      api_dd4: "Anthropic-compatible Kimi and DeepSeek-powered NVIDIA NIM endpoints.",
+      api_dt5: "EVREN LLM Gateway",
+      api_dd5: "Enterprise or open-source unified model routing gateways.",
+      api_dt6: "Custom OpenAI / Anthropic Endpoints",
+      api_dd6: "Connect your local LM Studio, vLLM, or self-hosted inference servers easily.",
+      custom_title: "Customize your office and team",
+      custom_desc: "As your project evolves, scale your agency. Customize office layouts, roles, and safety policies without stopping running workers:",
+      c_tick1: "<b>Pixel Office Designer:</b> Drag and drop desks to arrange your team workspace.",
+      c_tick2: "<b>Multi-Project Isolation:</b> Run distinct client projects in isolated profiles with segregated tasks and budgets.",
+      c_tick3: "<b>Risk Gate:</b> High-risk commands (git push, db drop, bulk file deletions) pause and request your approval.",
+      c_tick4: "<b>Visual Themes:</b> Dark/light modes, retro pixel palette options, and custom brand logos.",
+      c_tick5: "<b>Telegram Bot:</b> /status, /summary, and urgent approval questions sent straight to your phone.",
+      bench_title: "Local yet blisteringly fast",
+      bench_desc: "The biggest bottleneck in local multi-agent systems is re-reading 50k tokens of conversation history whenever context switches. Emret Agency eliminates this with <b>slot cache memory</b>:",
+      th_metric: "Metric",
+      th_standard: "Standard Setup",
+      th_emret: "Emret Agency",
+      b_row1: "Resume 51k token conversation on agent switch",
+      b_row1_std: "~30 seconds (full re-eval)",
+      b_row1_win: "~2 seconds (instant slot restore)",
+      b_row2: "Optimized prompt footprint",
+      b_row2_std: "~15k tokens",
+      b_row2_win: "~7.9k tokens",
+      b_row3: "Prompt evaluation speed",
+      b_row3_std: "1100–1300 tokens/sec",
+      b_row3_win: "1500–2100 tokens/sec",
+      b_row4: "VRAM consumption",
+      b_row4_std: "9.7 GB",
+      b_row4_win: "9.2 GB (q8 cache)",
+      bench_note: "Benchmarks: RTX 3080 10 GB, Gemma 4 12B, 64k context window. Benchmark tool included in app.",
+      feat_title: "All Core Features",
+      f_dt1: "Multi-Agent CLI Orchestration",
+      f_dd1: "Claude Code, OpenCode, Codex, Crush, pi, and your favourite CLI agents in one unified hub.",
+      f_dt2: "Checkpoint Protocol (devam.md)",
+      f_dd2: "Agents log compact resume checkpoints; even after reboots, work resumes without costly context re-reading.",
+      f_dt3: "Ask Me & Approval Queue",
+      f_dd3: "Architectural questions and confirmations cleanly grouped with red badge counters.",
+      f_dt4: "Review Desk",
+      f_dd4: "Inspect agent git branches with visual diffs, execute test suites, and merge/revert in 1-click.",
+      f_dt5: "Multi-Project Workspaces",
+      f_dd5: "Launch independent instances for each client project; budgets and tasks never collide.",
+      f_dt6: "SafeStorage Vault",
+      f_dd6: "All credentials encrypted using OS DPAPI; zero plaintext secrets in repos or disks.",
+      f_dt7: "Telegram Integration",
+      f_dd7: "Live health status, morning briefings, and urgent alerts delivered to your pocket bot.",
+      f_dt8: "One-Click Windows Installer",
+      f_dd8: "Package into a standalone installer with npm run dist:win for non-developer deployment.",
+      tour_title: "Interface Tour",
+      tour_1: "<b>Local Engine Panel</b> — VRAM telemetry, queue status, spillover meters.",
+      tour_2: "<b>Pixel Office Floor</b> — Real-time visual activity bubbles over agent desks.",
+      tour_3: "<b>Command Center</b> — Chat, Terminal, Live Monitor, and Ask Me panes.",
+      tour_4: "<b>Message & File Dropper</b> — Drag-and-drop file ingestion and team dispatch.",
+      tour_5: "<b>Agent Roster Cards</b> — Real-time Local (Green) / API (Red) status pills.",
+      inst_title: "Quick Setup & Launch",
+      inst_desc: "Clean setup for Windows 10/11. The installer script validates all dependencies automatically.",
+      step1_h: "1. Clone Repository",
+      step1_p: "Clone the repository to your machine and enter the directory:",
+      step2_h: "2. Install Ollama (Optional Local Engine)",
+      step2_p: "Recommended if your GPU has 8 GB+ VRAM. Skip if you prefer cloud APIs.",
+      step3_h: "3. Run Setup Script",
+      step3_p: "Pass -Yerel to automatically pull and build Gemma 4 12B local model:",
+      step4_h: "4. Start the Office",
+      step4_p: "Keep the terminal console open while the application runs:",
+      btn_copy: "Copy",
+      card_guide_title: "Step-by-Step Illustrated Onboarding Guide",
+      card_guide_desc: "Illustrated guide explaining API setup, workspace folder creation, and launching your first task:",
+      btn_open_guide: "Open Visual Guide →",
+      more_text: "For advanced setup, API configurations, and Windows EXE packaging:",
+      link_kurulum: "Setup Guide (KURULUM.md)",
+      link_ollama: "Ollama Setup Guide",
+      faq_title: "Frequently Asked Questions",
+      faq_q1: "Does running this cost money or tokens?",
+      faq_a1: "No! When running on local models (Ollama or llama-server), you can generate unlimited code at $0 cost. Cloud APIs are only invoked if you explicitly provide an API key or enable context spillover.",
+      faq_q2: "What graphics card do I need?",
+      faq_a2: "The recommended model (Gemma 4 12B) fits comfortably into a 10 GB VRAM GPU. 8 GB cards run the light model (Qwen 4B), while 24 GB cards run 30B models. If you have no GPU, agents run smoothly via cloud APIs.",
+      faq_q3: "Can I package this into an installer (.exe)?",
+      faq_a3: "Yes! Running npm run dist:win produces a standalone Windows setup installer in dist/ so other people can run it without needing Node.js or build tools.",
+      faq_q4: "Are my code and API keys private?",
+      faq_a4: "100% private. Emret Agency never sends your code to remote telemetry servers. Keys are encrypted with Windows DPAPI (Electron safeStorage), and projects remain strictly on your local disk.",
+      faq_q5: "Does it work without internet?",
+      faq_a5: "Yes. Local open models and worker agents operate completely offline. Pair the orchestrator to a local engine and you can code anywhere without connectivity.",
+      faq_q6: "Can agents damage my machine or filesystem?",
+      faq_a6: "No. The built-in Risk Gate intercepts potentially destructive operations (bulk deletes, git push, database drops) and prompts you for manual approval first.",
+      give_title: "Let's build the future of agentic coding together",
+      give_desc: "Emret Agency is 100% open source under the MIT license. Support ongoing development, new local model optimizations, and releases by sponsoring.",
+      btn_donate_now: "Sponsor Now",
+      footer_license: "Emret Agency · MIT Open Source License",
+      f_repo: "GitHub Repository",
+      f_visual_guide: "Visual Setup Guide",
+      f_guide: "Setup Guide",
+      f_ollama: "Ollama Guide"
+    }
+  };
+
+  function setLang(lang) {
+    if (!translations[lang]) lang = 'tr';
+    localStorage.setItem('emret_lang', lang);
+    document.documentElement.lang = lang;
+
+    // Toggle button UI
+    document.getElementById('btnTr').classList.toggle('active', lang === 'tr');
+    document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+
+    // Update all translatable elements
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang][key]) {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = translations[lang][key];
+        } else {
+          el.innerHTML = translations[lang][key];
+        }
+      }
+    });
+  }
+
+  // Initial language check
+  const savedLang = localStorage.getItem('emret_lang') || (navigator.language.startsWith('tr') ? 'tr' : 'en');
+  setLang(savedLang);
+
+  // Copy Buttons
+  document.querySelectorAll('[data-copy]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const text = b.parentElement.querySelector('pre').textContent;
+      const currentLang = localStorage.getItem('emret_lang') || 'tr';
+      try { 
+        await navigator.clipboard.writeText(text); 
+        b.textContent = currentLang === 'tr' ? 'Kopyalandı!' : 'Copied!'; 
+      } catch { 
+        b.textContent = currentLang === 'tr' ? 'Seçip kopyalayın' : 'Select to copy'; 
+      }
+      setTimeout(() => { 
+        b.textContent = currentLang === 'tr' ? 'Kopyala' : 'Copy'; 
+      }, 1800);
+    });
+  });
+
+  // Ticker animation with bilingual messages
+  const tickerItems = {
+    tr: [
+      ['#2F9E6A', 'Developer yerel modelde birim testleri koşturuyor'],
+      ['#2F9E6A', 'Reklam yerel modelde lansman bültenini yazıyor'],
+      ['#D4A31C', 'Araştırmacı kuyrukta bekliyor — sıradaki o'],
+      ['#3A6FD8', 'Muhasebeci uzun bağlamı ile ücretsiz API\'ye taştı'],
+      ['#E5484D', 'Tasarımcı mimari bir soru sordu — Bana Sor'],
+      ['#7A3E9D', 'Genel Müdür yeni projeyi görevlere böldü, ofis çalışıyor']
+    ],
+    en: [
+      ['#2F9E6A', 'Developer is running unit tests on the local model'],
+      ['#2F9E6A', 'Copywriter is drafting the launch newsletter locally'],
+      ['#D4A31C', 'Researcher is queuing in line — next in turn'],
+      ['#3A6FD8', 'Accountant overflowed to free API due to long context'],
+      ['#E5484D', 'Designer requested approval on the Ask Me board'],
+      ['#7A3E9D', 'General Manager dispatched roadmap tasks, office is buzzing']
+    ]
+  };
+
+  const tick = document.getElementById('tick');
+  const dot = document.getElementById('tickDot');
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && tick && dot) {
+    let i = 0;
+    setInterval(() => {
+      const l = localStorage.getItem('emret_lang') || 'tr';
+      const list = tickerItems[l] || tickerItems.tr;
+      i = (i + 1) % list.length;
+      dot.style.background = list[i][0];
+      tick.textContent = list[i][1];
+    }, 3200);
+  }
+</script>
+</body>
+</html>

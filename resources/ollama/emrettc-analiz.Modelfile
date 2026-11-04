@@ -1,0 +1,6 @@
+# EMRETTC — analiz / uzun düşünme. 27B, ~17 GB: 24 GB ekran kartı önerilir.
+FROM qwen3.5:27b
+PARAMETER num_ctx 32768
+PARAMETER temperature 1
+PARAMETER top_k 20
+PARAMETER top_p 0.95

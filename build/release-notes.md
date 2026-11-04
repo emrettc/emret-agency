@@ -1,0 +1,6 @@
+- **Ofis artık Türkçe.** Arayüz, ajan mesajları ve görev panosu dahil her şey Türkçe; kadro adları düzenlenebilir, yöneticinin adı "Proje Lideri".
+- **Tek ofis, birden çok proje.** Projeler etiketle ayrılır; Projeler sekmesi proje başına ajanları, görevleri, soruları ve harcamayı gösterir.
+- **Gelen Kutusu ve Sohbet.** Ajanların soruları, onayları ve mesajları tek yerde; oradan doğrudan yanıt, Slack'e de düşer.
+- **Riskli işlemler onaya gelir.** Reklam, ödeme ve dış mesaj kararları ajan değil siz onaylarsınız.
+- **BYOK yedek motorlar.** Ajan başına EVREN/NVIDIA; Claude kotası azalınca otomatik geçiş, kota açılınca dönüş.
+- **Güncelleyici kapalı.** Yeni sürüm her zaman elle kurulur.
